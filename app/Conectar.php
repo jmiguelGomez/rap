@@ -32,7 +32,7 @@ class Conectar
                     ]
                 );
             } catch (PDOException $e) {
-                error_log('[CHECK] Conexión BD falló: ' . $e->getMessage());
+                error_log('[RAP] Conexión BD falló: ' . $e->getMessage());
                 die('Error al conectar con la base de datos.');
             }
         }
@@ -52,7 +52,7 @@ class Conectar
             return $stmt;
         } catch (PDOException $e) {
             self::$ultimoError = $e->getMessage();
-            error_log('[CHECK] varias(): ' . $e->getMessage() . ' Query: ' . $query);
+            error_log('[RAP] varias(): ' . $e->getMessage() . ' Query: ' . $query);
             return false;
         }
     }
@@ -66,7 +66,7 @@ class Conectar
             return $result ?: null;
         } catch (PDOException $e) {
             self::$ultimoError = $e->getMessage();
-            error_log('[CHECK] una(): ' . $e->getMessage() . ' Query: ' . $query);
+            error_log('[RAP] una(): ' . $e->getMessage() . ' Query: ' . $query);
             return null;
         }
     }
@@ -84,7 +84,7 @@ class Conectar
             return $stmt->rowCount();
         } catch (PDOException $e) {
             self::$ultimoError = $e->getMessage();
-            error_log('[CHECK] cuantos(): ' . $e->getMessage());
+            error_log('[RAP] cuantos(): ' . $e->getMessage());
             return 0;
         }
     }
@@ -97,7 +97,7 @@ class Conectar
             return $stmt->execute($params);
         } catch (PDOException $e) {
             self::$ultimoError = $e->getMessage();
-            error_log('[CHECK] ejecutar(): ' . $e->getMessage() . ' Query: ' . $query);
+            error_log('[RAP] ejecutar(): ' . $e->getMessage() . ' Query: ' . $query);
             return false;
         }
     }
@@ -119,7 +119,7 @@ class Conectar
             return $stmt->rowCount();
         } catch (PDOException $e) {
             self::$ultimoError = $e->getMessage();
-            error_log('[CHECK] totalFilas(): ' . $e->getMessage() . ' Query: ' . $query);
+            error_log('[RAP] totalFilas(): ' . $e->getMessage() . ' Query: ' . $query);
             return 0;
         }
     }

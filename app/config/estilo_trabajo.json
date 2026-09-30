@@ -1,0 +1,7 @@
+{
+    "$doc": "Config de estilo de rap.isorga.com, la misma que isorga-net/app/config/estilo_trabajo.json. La lee app/includes/estilo_trabajo.php (incluido en app/inc_head.php).",
+    "boton_primario_color": "",
+    "boton_primario_hover": "",
+    "tablas_motor": "datatables",
+    "tablas_excel_global": true
+}

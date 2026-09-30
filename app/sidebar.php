@@ -44,7 +44,7 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
     <div class="sb-head">
         <a href="/index.php" class="sb-brand is-dominio" title="rap.isorga.com">
             <div class="sb-logo is-marca"><img src="/assets/img/logo.png" alt="ISORGA" width="28" height="28"></div>
-            <span class="sb-brand-txt">CHECK</span>
+            <span class="sb-brand-txt">RAP</span>
         </a>
         <button type="button" class="sb-collapse" id="sb-collapse" aria-label="<?= $sbE($language['RAP_COLAPSAR_MENU'] ?? 'Colapsar menú') ?>" aria-controls="sidebar" aria-expanded="true">&#171;</button>
         <button type="button" class="sb-close" id="sb-close" aria-label="<?= $sbE($language['RAP_CERRAR_MENU'] ?? 'Cerrar menú') ?>"><i class="bi bi-x-lg" aria-hidden="true"></i></button>

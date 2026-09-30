@@ -13,7 +13,7 @@ require_once __DIR__ . '/../app/acceso_lib.php';
 $cfg = require __DIR__ . '/../app/config.php';
 $secret = (string) ($cfg['sso_secret'] ?? '');
 $d = (string) ($_GET['d'] ?? ''); $s = (string) ($_GET['s'] ?? '');
-$fuera = static function (string $m): never { error_log('[CHECK] sso rechazado: ' . $m); http_response_code(404); exit; };
+$fuera = static function (string $m): never { error_log('[RAP] sso rechazado: ' . $m); http_response_code(404); exit; };
 if (strlen($secret) < 32 || !preg_match('/^[a-f0-9]{64}$/', $s) || $d === '' || strlen($d) > 300) $fuera('parametros');
 $carga = base64_decode(strtr($d, '-_', '+/'), true);
 if ($carga === false || !hash_equals(hash_hmac('sha256', $carga, $secret), $s)) $fuera('firma');

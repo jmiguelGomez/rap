@@ -19,7 +19,7 @@ if ($mail !== '' && $pass !== '') {
 }
 if (!$u) {
     usleep(400000);
-    error_log('[CHECK] login rechazado para ' . $mail);
+    error_log('[RAP] login rechazado para ' . $mail);
     header('Location: /auth/login.php?aviso=error&mail=' . urlencode($mail)); exit;
 }
 rap_abrir_usuario($u);

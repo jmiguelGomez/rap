@@ -29,4 +29,6 @@ $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__D
     <link href="<?= $rapCss('css/workspace.css') ?>" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= $rapCss('js/workspace.js') ?>" defer></script>
+    <?php // Tablas estilo Excel en toda la app (tablas_excel_global en app/config/estilo_trabajo.json), como en ISORGA ?>
+    <?php include __DIR__ . '/includes/estilo_trabajo.php'; ?>
 </head>
