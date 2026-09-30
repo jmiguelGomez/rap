@@ -1,0 +1,12 @@
+# Secretos y datos: nunca en git
+app/config.php
+app/config/.env
+app/storage/
+# Enlaces al original de ISORGA (mismo disco y misma librería de PDF)
+DOCS
+assets/tcpdf
+_INBOX/
+*.bak
+*.orig
+LOGOS
+.gstack/

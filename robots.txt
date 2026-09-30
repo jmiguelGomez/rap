@@ -1,0 +1,12 @@
+# Solo la portada es pública e indexable.
+User-agent: *
+Allow: /$
+Disallow: /portada.php
+Disallow: /auth/
+Disallow: /rap/
+Disallow: /app/
+Disallow: /DOCS/
+Disallow: /database/
+Disallow: /scripts/
+
+Sitemap: https://rap.isorga.com/sitemap.xml

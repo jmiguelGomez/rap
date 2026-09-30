@@ -1,0 +1,120 @@
+/* COPIA de assets/css/audit.css (audit.isorga.com, 2026-09-29) para que check tenga el mismo aspecto.
+   No editar aquí sin anotarlo: al cambiar el de audit, se vuelve a copiar. */
+/* ====================================================================
+   Audisorga — ajustes propios sobre el tema heredado de tradebe.
+   theme.css e intranet.css se dejan intactos para que un cambio de
+   estética allí siga llegando aquí. Esto es solo lo que Audisorga necesita
+   de más: el hub y el aterrizaje de las pantallas portadas del módulo 6.
+   ==================================================================== */
+
+/* ── Hub de entrada ──────────────────────────────────────────────── */
+.hub-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem 0 2rem;
+}
+.hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 820px;
+}
+.hub-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .875rem;
+    padding: 2.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    clip-path: var(--clip-card);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color var(--trans), background var(--trans), filter var(--trans), transform .15s;
+    min-height: 160px;
+    text-align: center;
+}
+.hub-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-raised);
+    filter: var(--glow-filter);
+    transform: translateY(-2px);
+    color: var(--text);
+    text-decoration: none;
+}
+.hub-card-icon { font-size: 2.25rem; line-height: 1; color: var(--accent); }
+.hub-card-name { font-size: 1rem; font-weight: 700; letter-spacing: .01em; }
+.hub-card-desc { font-size: .775rem; color: var(--text-muted); line-height: 1.45; max-width: 180px; }
+
+@media (max-width: 900px) { .hub-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .hub-grid { grid-template-columns: 1fr; } }
+
+/* ── Cabecera de página (la que emite app/template.php) ──────────── */
+.page-header {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-shadow: var(--glow-text);
+    margin: 0;
+}
+.breadcrumb { margin: 0 0 .35rem; padding: 0; background: none; font-size: .75rem; }
+.breadcrumb .breadcrumb-item + .breadcrumb-item::before { content: none; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+/* ── Puntos de estado ────────────────────────────────────────────
+   El módulo 6 pinta el estado con `.isg-ostat` + `.isg-dot`, utilidades
+   que en ISORGA viven en studio-theme-toggle.css. Ese archivo no se
+   copia (es de ISORGA); se reponen aquí las dos reglas que hacen falta. */
+.isg-ostat { display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap; }
+.isg-dot {
+    width: .55rem; height: .55rem; border-radius: 50%;
+    display: inline-block; flex: 0 0 auto;
+}
+
+/* ── Tablas del módulo 6 ─────────────────────────────────────────
+   Vienen con `table-bordered table-hover` y `thead.table-light`, que en
+   un tema oscuro se ve como una banda blanca. Se reconduce al tema. */
+.table > :not(caption) > * > * { background-color: transparent; color: var(--text); }
+.table-bordered > :not(caption) > * > * { border-color: var(--border); }
+.table > thead.table-light > tr > th {
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    border-color: var(--border);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+}
+.table-hover > tbody > tr:hover > * { background-color: var(--hover-bg, rgba(127,127,127,.08)); }
+
+/* Las filas con menú desplegable de acciones necesitan que el dropdown
+   no quede recortado por el contenedor de la tabla. */
+.table-responsive { overflow: visible; }
+
+/* ── Tarjetas ───────────────────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0;
+}
+.card-header { background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+
+/* ── DataTables sobre fondo oscuro ──────────────────────────────── */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 0;
+}
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter { color: var(--text-muted); font-size: .8rem; }
+.dataTables_filter { margin-bottom: 15px; }
+.page-link { background: var(--surface); border-color: var(--border); color: var(--text); }
+.page-item.active .page-link { background: var(--accent); border-color: var(--accent); color: var(--btn-on-accent); }

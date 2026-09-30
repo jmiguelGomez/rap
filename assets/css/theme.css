@@ -1,0 +1,251 @@
+/* COPIA de assets/css/theme.css (audit.isorga.com, 2026-09-29) para que check tenga el mismo aspecto.
+   No editar aquí sin anotarlo: al cambiar el de audit, se vuelve a copiar. */
+/* ═══════════════════════════════════════════════════════════════════════
+   Tradebe GMAO · Sistema de temas: HUD (oscuro) / Blueprint (claro)
+
+   Mecanismo de activación
+   ───────────────────────
+   · Automático : prefers-color-scheme del SO
+   · Forzado    : data-theme="dark"  + data-bs-theme="dark"  en <html>
+                  data-theme="light" + data-bs-theme="light" en <html>
+
+   Tokens comunes (no cambian entre temas):
+   · --font-display, --font-mono, --tracking-wide
+   · --clip-card, --clip-button  (biseles de esquina recortada)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Tokens inmutables ─────────────────────────────────────────────────── */
+:root {
+    --font-display:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono:     "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    --tracking-wide: 0.12em;
+
+    /* Biseles: esquina superior-derecha e inferior-izquierda recortadas */
+    --clip-card:   polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    --clip-button: polygon(0 0, calc(100% - 6px)  0, 100% 6px,  100% 100%, 6px  100%, 0 calc(100% - 6px));
+
+    /* Sidebar */
+    --sb-w:      214px;
+    --sb-w-min:  62px;
+    --radius-sm: 6px;
+    --trans:     .15s ease;
+
+    /* Marca ISORGA: el isotipo lleva barras negras, así que necesita
+       fondo claro propio en los dos temas. No es un color de tema. */
+    --brand-logo-bg: #ffffff;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   HUD — Modo oscuro (por defecto)
+   Estética: cabina / ciencia ficción. Cian luminoso sobre negro azulado.
+   Las variables oscuras van SOLO en [data-theme="dark"], no en :root,
+   para que [data-theme="light"] pueda sobrescribirlas sin conflicto.
+   ══════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+    /* Fondos */
+    --bg:             #080c16;
+    --surface:        #0d1422;
+    --surface-raised: #131b2e;
+
+    /* Tipografía */
+    --text:       #dceef4;
+    --text-muted: #5d7a8a;
+
+    /* Acento — cian luminoso */
+    --accent:       #2dd4ee;
+    --accent-strong:#22c4de;
+    --accent-soft:  rgba(45, 212, 238, 0.12);
+
+    /* Texto sobre fondo de acento (contraste ~9.5:1) */
+    --btn-on-accent: #060a12;
+
+    /* Bordes */
+    --border:        rgba(45, 212, 238, 0.30);
+    --border-danger: rgba(220, 38, 38, 0.35);
+
+    /* Glows — lo que en oscuro brilla, en claro se traza */
+    --glow-accent:  0 0 12px rgba(45, 212, 238, 0.45);
+    --glow-text:    0 0 10px rgba(45, 212, 238, 0.35);
+    --glow-filter:  drop-shadow(0 0 8px rgba(45, 212, 238, 0.45));
+    --shadow-hover: 0 4px 24px rgba(0, 0, 0, 0.55);
+
+    /* Estados semánticos */
+    --state-success:        #4ade80;
+    --state-success-bg:     rgba(34, 197, 94,  0.10);
+    --state-success-border: rgba(34, 197, 94,  0.30);
+    --state-danger:         #ef4444;
+    --state-danger-bg:      rgba(220, 38,  38, 0.10);
+    --state-danger-border:  rgba(220, 38,  38, 0.25);
+    --state-info:           #7dd3fc;
+    --state-info-bg:        rgba(56,  189, 248, 0.10);
+    --state-info-border:    rgba(56,  189, 248, 0.25);
+
+    /* Borde reforzado (hover sidebar) */
+    --border-strong: rgba(45, 212, 238, 0.65);
+
+    /* Badge de teclado (atajos) */
+    --kbd-bg:     rgba(45, 212, 238, 0.15);
+    --kbd-text:   #2dd4ee;
+    --kbd-border: rgba(45, 212, 238, 0.45);
+
+    /* ── Overrides Bootstrap ─────────────────────────────────────────── */
+    --bs-body-bg:                  var(--bg);
+    --bs-body-color:               var(--text);
+    --bs-secondary-color:          var(--text-muted);
+    --bs-tertiary-bg:              var(--surface);
+    --bs-border-color:             var(--border);
+    --bs-border-color-translucent: var(--border);
+    --bs-primary:                  var(--accent);
+    --bs-primary-rgb:              45, 212, 238;
+    --bs-link-color:               var(--accent);
+    --bs-link-color-rgb:           45, 212, 238;
+    --bs-link-hover-color:         var(--accent-strong);
+    --bs-link-hover-color-rgb:     34, 196, 222;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   BLUEPRINT — Modo claro vía preferencia del SO
+   Estética: plano de ingeniería diurno. Azul técnico sólido, sin glows.
+   ══════════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        /* Fondos */
+        --bg:             #eef3f9;
+        --surface:        #ffffff;
+        --surface-raised: #f4f7fb;
+
+        /* Tipografía */
+        --text:       #13202d;
+        --text-muted: #5a6b78;
+
+        /* Acento — azul de plano técnico sólido */
+        --accent:        #0b6db5;
+        --accent-strong: #0955a0;
+        --accent-soft:   rgba(11, 109, 181, 0.10);
+
+        /* Texto sobre fondo de acento (contraste ~4.9:1 WCAG AA) */
+        --btn-on-accent: #ffffff;
+
+        /* Bordes — líneas finas sin resplandor */
+        --border:        rgba(11, 109, 181, 0.35);
+        --border-danger: rgba(220, 38,  38, 0.40);
+
+        /* En claro no hay glows: el trazo sustituye a la luz */
+        --glow-accent:  0 1px 3px rgba(16, 32, 46, 0.08);
+        --glow-text:    none;
+        --glow-filter:  none;
+        --shadow-hover: 0 4px 12px rgba(11, 109, 181, 0.18);
+
+        /* Estados semánticos (mejor contraste en fondo claro) */
+        --state-success:        #15803d;
+        --state-success-bg:     rgba(34, 197, 94,  0.10);
+        --state-success-border: rgba(34, 197, 94,  0.40);
+        --state-danger:         #b91c1c;
+        --state-danger-bg:      rgba(220, 38,  38, 0.08);
+        --state-danger-border:  rgba(220, 38,  38, 0.30);
+        --state-info:           #0369a1;
+        --state-info-bg:        rgba(14,  165, 233, 0.10);
+        --state-info-border:    rgba(14,  165, 233, 0.30);
+
+        /* Borde reforzado */
+        --border-strong: rgba(11, 109, 181, 0.60);
+
+        /* Badge de teclado */
+        --kbd-bg:     rgba(11, 109, 181, 0.12);
+        --kbd-text:   #0b6db5;
+        --kbd-border: rgba(11, 109, 181, 0.40);
+
+        /* ── Overrides Bootstrap ─────────────────────────────────────── */
+        --bs-body-bg:                  var(--bg);
+        --bs-body-color:               var(--text);
+        --bs-secondary-color:          var(--text-muted);
+        --bs-tertiary-bg:              var(--surface);
+        --bs-border-color:             var(--border);
+        --bs-border-color-translucent: var(--border);
+        --bs-primary:                  var(--accent);
+        --bs-primary-rgb:              11, 109, 181;
+        --bs-link-color:               var(--accent);
+        --bs-link-color-rgb:           11, 109, 181;
+        --bs-link-hover-color:         var(--accent-strong);
+        --bs-link-hover-color-rgb:     9, 85, 160;
+    }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   BLUEPRINT — Modo claro forzado por data-theme="light"
+   (Idéntico al bloque @media anterior; necesario para el override manual)
+   ══════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+    --bg:             #eef3f9;
+    --surface:        #ffffff;
+    --surface-raised: #f4f7fb;
+
+    --text:       #13202d;
+    --text-muted: #5a6b78;
+
+    --accent:        #0b6db5;
+    --accent-strong: #0955a0;
+    --accent-soft:   rgba(11, 109, 181, 0.10);
+
+    --btn-on-accent: #ffffff;
+
+    --border:        rgba(11, 109, 181, 0.35);
+    --border-danger: rgba(220, 38,  38, 0.40);
+
+    --glow-accent:  0 1px 3px rgba(16, 32, 46, 0.08);
+    --glow-text:    none;
+    --glow-filter:  none;
+    --shadow-hover: 0 4px 12px rgba(11, 109, 181, 0.18);
+
+    --state-success:        #15803d;
+    --state-success-bg:     rgba(34, 197, 94,  0.10);
+    --state-success-border: rgba(34, 197, 94,  0.40);
+    --state-danger:         #b91c1c;
+    --state-danger-bg:      rgba(220, 38,  38, 0.08);
+    --state-danger-border:  rgba(220, 38,  38, 0.30);
+    --state-info:           #0369a1;
+    --state-info-bg:        rgba(14,  165, 233, 0.10);
+    --state-info-border:    rgba(14,  165, 233, 0.30);
+
+    --border-strong: rgba(11, 109, 181, 0.60);
+
+    --kbd-bg:     rgba(11, 109, 181, 0.12);
+    --kbd-text:   #0b6db5;
+    --kbd-border: rgba(11, 109, 181, 0.40);
+
+    --bs-body-bg:                  var(--bg);
+    --bs-body-color:               var(--text);
+    --bs-secondary-color:          var(--text-muted);
+    --bs-tertiary-bg:              var(--surface);
+    --bs-border-color:             var(--border);
+    --bs-border-color-translucent: var(--border);
+    --bs-primary:                  var(--accent);
+    --bs-primary-rgb:              11, 109, 181;
+    --bs-link-color:               var(--accent);
+    --bs-link-color-rgb:           11, 109, 181;
+    --bs-link-hover-color:         var(--accent-strong);
+    --bs-link-hover-color-rgb:     9, 85, 160;
+}
+
+/* Sistema visual espacial · valores compartidos por toda la aplicación. */
+:root, :root[data-theme="light"] {
+ --bg:#f1f4f8; --surface:#ffffff; --surface-raised:#f7f9fc;
+ --text:#192b42; --text-muted:#53657b; --accent:#245ac4; --accent-strong:#19449d;
+ --accent-soft:#eaf0ff; --border:#dce3ed; --border-strong:#8baddf;
+ --clip-card:none; --clip-button:none; --tracking-wide:.025em;
+ --sb-w:256px; --sb-w-min:88px; --radius-sm:12px;
+ --glow-text:none; --glow-filter:none;
+ --glow-accent:0 4px 12px #245ac422;
+ --shadow-hover:0 18px 40px #20345218;
+ --elevation:0 2px 3px #20345205,0 8px 24px #20345209;
+ --elevation-high:0 12px 24px #142c4822,0 32px 70px #142c4815;
+ --nav-bg:#172a43; --nav-text:#dbe5f4; --nav-muted:#aebfd6;
+ --nav-active:#304b70; --on-accent:#fff;
+ --shadow-button:0 4px 10px #0002; --overlay:#12233c88;
+ --bs-primary-rgb:36,90,196; --bs-link-color:var(--accent); --bs-link-color-rgb:36,90,196;
+ --bs-link-hover-color:var(--accent-strong); --bs-body-bg:var(--bg);
+ --bs-body-color:var(--text); --bs-border-color:var(--border);
+}

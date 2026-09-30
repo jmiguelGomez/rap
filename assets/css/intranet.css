@@ -1,0 +1,578 @@
+/* COPIA de assets/css/intranet.css (audit.isorga.com, 2026-09-29) para que check tenga el mismo aspecto.
+   No editar aquí sin anotarlo: al cambiar el de audit, se vuelve a copiar. */
+/* Componentes de la intranet. Las variables de color viven en theme.css. */
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+}
+
+/* ── Topbar ──────────────────────────────────────────────────────────── */
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    height: 48px;
+    padding: 0 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 150;
+    margin-left: var(--sb-w);
+    transition: margin-left var(--trans);
+}
+html.sb-collapsed .topbar { margin-left: var(--sb-w-min); }
+
+.topbar-spacer { flex: 1; }
+
+.topbar-title {
+    font-size: .78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+}
+
+/* `.app-theme-toggle` se fue en v1.008 con el botón que estilaba: el tema ya
+   no se elige, es claro fijo (app/cabecera.php). */
+.app-nav-btn {
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: .3125rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: background var(--trans), color var(--trans), border-color var(--trans);
+    white-space: nowrap;
+}
+.app-nav-btn:hover {
+    background: var(--surface-raised);
+    color: var(--text);
+    border-color: var(--accent);
+}
+.app-nav-btn--active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.topbar-centro-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    background: none;
+    cursor: pointer;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────── */
+.sidebar ~ main {
+    margin-left: var(--sb-w);
+    max-width: calc(100vw - var(--sb-w));
+    transition: margin-left var(--trans), max-width var(--trans);
+}
+html.sb-collapsed .sidebar ~ main {
+    margin-left: var(--sb-w-min);
+    max-width: calc(100vw - var(--sb-w-min));
+}
+
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: var(--sb-w);
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    z-index: 200;
+    transition: width var(--trans);
+    overflow: hidden;
+}
+html.sb-collapsed .sidebar { width: var(--sb-w-min); }
+
+.sb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    height: 48px;
+    padding: 0 .7rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.sb-brand {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: .78rem;
+    text-decoration: none;
+}
+.sb-brand:hover { color: var(--accent); }
+
+.sb-logo {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    clip-path: var(--clip-button);
+    color: var(--btn-on-accent);
+    font-weight: 800;
+    font-size: .7rem;
+    letter-spacing: .04em;
+    filter: var(--glow-filter);
+}
+
+.sb-collapse {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .875rem;
+    transition: color var(--trans), border-color var(--trans), transform var(--trans);
+}
+.sb-collapse:hover { color: var(--accent); border-color: var(--border-strong); }
+html.sb-collapsed .sb-collapse { transform: rotate(180deg); }
+
+.sb-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    padding: .6rem .45rem;
+}
+
+.sb-link {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .5rem .6rem;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: .86rem;
+    text-decoration: none;
+    transition: background var(--trans), color var(--trans);
+}
+.sb-link:hover { background: var(--surface-raised); color: var(--text); }
+.sb-link.is-active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.sb-ico { width: 1.4rem; flex-shrink: 0; text-align: center; font-size: 1rem; }
+
+.sb-divider { border: none; border-top: 1px solid var(--border); margin: .4rem .6rem; }
+
+/* ── Admin nav (pestañas del panel de administración) ─────────────────── */
+.admin-nav { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.admin-nav a { padding: .45rem .875rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text-muted); font-size: .875rem; text-decoration: none; transition: border-color var(--trans), color var(--trans); }
+.admin-nav a.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 600; }
+.admin-nav a:hover:not(.active) { border-color: var(--border-strong); color: var(--text); }
+
+.sb-section { border-top: 1px solid var(--border); margin-top: .25rem; padding-top: .15rem; }
+.sb-section-label { display: block; font-size: .58rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); padding: .55rem 1rem .2rem; opacity: .75; white-space: nowrap; overflow: hidden; }
+.sb-section .sb-nav { flex: none; padding-top: 0; }
+html.sb-collapsed .sb-section-label { opacity: 0; height: 0; padding: 0; }
+
+/* Centro selector en el sidebar */
+button.sb-centro-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+button.sb-centro-btn:hover { background: var(--surface-hover, rgba(255,255,255,.06)); color: var(--text); }
+html.sb-collapsed .sb-centro-txt { display: none; }
+html.sb-collapsed button.sb-centro-btn { justify-content: center; gap: 0; padding: .5rem 0; }
+
+/* Opciones del modal de centro */
+.sb-centro-opt {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--trans), background var(--trans);
+}
+.sb-centro-opt:hover { border-color: var(--accent); background: var(--accent-soft); }
+.sb-centro-opt--active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+.sb-foot {
+    border-top: 1px solid var(--border);
+    padding: .55rem .45rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    flex-shrink: 0;
+}
+
+.sb-user {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .35rem .6rem;
+    color: var(--text-muted);
+    font-size: .82rem;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Colapsado: ocultar textos, centrar iconos */
+html.sb-collapsed .sb-txt,
+html.sb-collapsed .sb-brand-txt { display: none; }
+html.sb-collapsed .sb-link  { justify-content: center; gap: 0; padding: .5rem 0; }
+html.sb-collapsed .sb-ico   { width: auto; }
+html.sb-collapsed .sb-head  { justify-content: center; padding: 0 .4rem; }
+html.sb-collapsed .sb-user  { justify-content: center; gap: 0; padding: .35rem 0; }
+
+/* ── Burger y overlay: solo móvil ────────────────────────────────────── */
+.sb-burger  { display: none; }
+.sb-overlay { display: none; }
+
+@media (max-width: 900px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sb-w) !important;
+        transition: transform .2s ease;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, .4);
+    }
+    .sidebar.open { transform: none; }
+
+    /* En cajón siempre se ven los textos, aunque esté "colapsado" */
+    html.sb-collapsed .sb-txt,
+    html.sb-collapsed .sb-brand-txt { display: inline; }
+    html.sb-collapsed .sb-link  { justify-content: flex-start; gap: .65rem; padding: .5rem .6rem; }
+    html.sb-collapsed .sb-ico   { width: 1.4rem; }
+    html.sb-collapsed .sb-head  { justify-content: space-between; padding: 0 .7rem; }
+    html.sb-collapsed .sb-user  { justify-content: flex-start; gap: .65rem; padding: .35rem .6rem; }
+    .sb-collapse { display: none; }
+
+    .sidebar ~ main,
+    html.sb-collapsed .sidebar ~ main { margin-left: 0; }
+    .topbar,
+    html.sb-collapsed .topbar { margin-left: 0; padding: 0 .8rem; }
+
+    .sb-burger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-size: 1.1rem;
+        cursor: pointer;
+        width: 34px;
+        height: 30px;
+        flex-shrink: 0;
+    }
+
+    .sb-overlay.open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 190;
+    }
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    border-color: var(--border);
+    clip-path: var(--clip-card);
+    border-radius: 0;
+}
+.card.border-secondary-subtle,
+.border-secondary-subtle {
+    border-color: var(--border) !important;
+}
+.card.border-danger-subtle {
+    border-color: var(--border-danger) !important;
+}
+
+/* ── Botones ─────────────────────────────────────────────────────────── */
+.btn-primary {
+    --bs-btn-bg:                  var(--accent);
+    --bs-btn-border-color:        var(--accent);
+    --bs-btn-hover-bg:            var(--accent-strong);
+    --bs-btn-hover-border-color:  var(--accent-strong);
+    --bs-btn-active-bg:           var(--accent-strong);
+    --bs-btn-active-border-color: var(--accent-strong);
+    --bs-btn-disabled-bg:         var(--accent);
+    --bs-btn-disabled-border-color: var(--accent);
+    color: var(--btn-on-accent);
+    clip-path: var(--clip-button);
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus-visible {
+    color: var(--btn-on-accent);
+    box-shadow: var(--glow-accent);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color:              var(--text);
+    --bs-btn-border-color:       var(--border);
+    --bs-btn-hover-bg:           var(--surface-raised);
+    --bs-btn-hover-border-color: var(--border);
+    --bs-btn-hover-color:        var(--text);
+}
+
+/* ── Formularios ─────────────────────────────────────────────────────── */
+.form-control,
+.form-select {
+    background-color: var(--bg);
+    border-color: var(--border);
+    color: var(--text);
+}
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg);
+    border-color: var(--accent);
+    color: var(--text);
+    box-shadow: 0 0 0 0.2rem var(--accent-soft);
+}
+.form-control::placeholder { color: var(--text-muted); }
+.form-label { color: var(--text); }
+.form-text  { color: var(--text-muted); }
+
+/* ── Tablas ──────────────────────────────────────────────────────────── */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+}
+
+/* ── Alertas ─────────────────────────────────────────────────────────── */
+.alert-success {
+    background: var(--state-success-bg);
+    border-color: var(--state-success-border);
+    color: var(--state-success);
+}
+.alert-danger {
+    background: var(--state-danger-bg);
+    border-color: var(--state-danger-border);
+    color: var(--state-danger);
+}
+.alert-info {
+    background: var(--state-info-bg);
+    border-color: var(--state-info-border);
+    color: var(--state-info);
+}
+
+/* ── Texto auxiliar ─────────────────────────────────────────────────── */
+.text-secondary { color: var(--text-muted) !important; }
+.text-primary   { color: var(--accent) !important; }
+
+/* ── Badges ──────────────────────────────────────────────────────────── */
+.badge.text-bg-success {
+    background: var(--state-success-bg) !important;
+    color: var(--state-success) !important;
+    border: 1px solid var(--state-success-border);
+}
+.badge.text-bg-secondary {
+    background: var(--surface-raised) !important;
+    color: var(--text-muted) !important;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────── */
+a { color: var(--accent); }
+a:hover { color: var(--accent-strong); }
+
+/* ── Login (sin sidebar) ─────────────────────────────────────────────── */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+.login-card { width: 100%; max-width: 420px; }
+.login-logo { max-width: 110px; height: auto; }
+
+/* ── Hover en tarjetas-acceso ────────────────────────────────────────── */
+.hover-shadow {
+    transition: transform 0.12s ease, filter 0.12s ease, border-color 0.12s ease;
+}
+.hover-shadow:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent) !important;
+    filter: var(--glow-filter);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ── Tabulator — tema dinámico (HUD oscuro / Blueprint claro) ───────── */
+/* La hoja tabulator_simple.min.css aporta la estructura en claro;
+   estos overrides la adaptan a las variables del tema activo.           */
+.tabulator {
+    background-color: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+    font-size: .875rem;
+}
+.tabulator .tabulator-header {
+    background-color: var(--bg);
+    border-bottom-color: var(--border);
+    color: var(--text);
+}
+.tabulator .tabulator-header .tabulator-col {
+    background-color: var(--bg);
+    border-right-color: var(--border);
+    color: var(--text);
+}
+.tabulator .tabulator-header .tabulator-col:hover {
+    background-color: var(--surface-raised);
+}
+.tabulator .tabulator-header .tabulator-header-filter input,
+.tabulator .tabulator-header .tabulator-header-filter select {
+    background-color: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+}
+.tabulator .tabulator-header .tabulator-header-filter input::placeholder {
+    color: var(--text-muted);
+}
+.tabulator .tabulator-tableholder { background-color: var(--surface); }
+.tabulator-row {
+    background-color: var(--surface);
+    border-bottom-color: var(--border);
+    color: var(--text);
+}
+.tabulator-row.tabulator-row-even { background-color: var(--bg); }
+.tabulator-row:hover,
+.tabulator-row.tabulator-row-even:hover { background-color: var(--surface-raised); }
+.tabulator-row .tabulator-cell { border-right-color: var(--border); }
+.tabulator .tabulator-footer {
+    background-color: var(--bg);
+    border-top-color: var(--border);
+    color: var(--text-muted);
+}
+.tabulator .tabulator-footer .tabulator-page-size {
+    background-color: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+}
+.tabulator .tabulator-footer .tabulator-page {
+    background-color: var(--surface);
+    border-color: var(--border);
+    color: var(--text-muted);
+}
+.tabulator .tabulator-footer .tabulator-page:hover:not([disabled]) {
+    background-color: var(--surface-raised);
+    border-color: var(--border-strong);
+    color: var(--text);
+}
+.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.tabulator .tabulator-footer .tabulator-page[disabled] { opacity: .35; }
+.tabulator .tabulator-col-sorter .tabulator-arrow {
+    border-bottom-color: var(--text-muted);
+    border-top-color: var(--text-muted);
+}
+
+
+/* ── Marca ISORGA en la cabecera y en las pantallas de acceso ──────────
+   El isotipo es un PNG con barras negras y aro magenta: sobre el fondo
+   oscuro del HUD desaparecería, así que va sobre un disco claro
+   (--brand-logo-bg), que vale igual en HUD y en Blueprint.            */
+.sb-logo.is-marca {
+    background: var(--brand-logo-bg);
+    clip-path: none;
+    border-radius: 50%;
+    padding: 2px;
+    filter: none;
+}
+/* 🔴 `contain`: el logo de marca no tiene por qué ser cuadrado. Sin esto, uno
+   apaisado se estiraría hasta el cuadrado y saldría deformado. */
+.sb-logo.is-marca img { width: 100%; height: 100%; display: block; object-fit: contain; }
+
+/* El dominio se escribe tal cual: nada de versalitas ni espaciado. */
+.sb-brand.is-dominio {
+    text-transform: none;
+    letter-spacing: .01em;
+    font-size: .72rem;
+}
+
+/* ── Desplegable «Configuración» de la cabecera (v1.008) ─────────────────
+   Sustituye a los tres enlaces de administración que estaban en el menú
+   lateral. El botón es un `.app-nav-btn` como los de al lado, así que solo
+   hacen falta: que se comporte como botón (el resto son <a>), la marca de
+   «estás en una de estas pantallas», y vestir el menú de Bootstrap con las
+   variables del tema — que si no llega con sus grises de fábrica. */
+.app-nav-btn {
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+.app-nav-btn.is-activo {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.app-cfg-menu {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-hover, 0 4px 12px rgba(0, 0, 0, .12));
+    font-size: .8125rem;
+    padding: .25rem;
+    min-width: 14rem;
+}
+.app-cfg-menu .dropdown-item {
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    padding: .4rem .6rem;
+}
+.app-cfg-menu .dropdown-item:hover,
+.app-cfg-menu .dropdown-item:focus {
+    background: var(--surface-raised);
+    color: var(--accent);
+}
+.app-cfg-menu .dropdown-item.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+.app-cfg-menu .dropdown-divider {
+    border-top-color: var(--border);
+    margin: .25rem 0;
+}

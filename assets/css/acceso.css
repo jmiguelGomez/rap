@@ -1,0 +1,151 @@
+/* Pantalla de acceso (login y elección de centro): COPIA del <style> de audit.isorga.com/auth/login.php
+   (2026-09-29), sacado a fichero porque en esta app el CSS solo vive en assets/css/. */
+        body {
+            /* El fondo lo ponen ahora las dos mitades (.acceso-foto y
+               .acceso-panel); el body solo deja de estorbar. */
+            margin: 0;
+            color: var(--text);
+            font-family: var(--font-display);
+            min-height: 100vh;
+        }
+        /* ── Pantalla partida: foto a la izquierda, formulario a la derecha ──
+           🔴 La foto de acceso es `assets/img/acceso.jpg`, optimizada a 1600 px. Servir
+           un original de varios miles de píxeles aquí es medio megabyte antes
+           de poder escribir el correo. Al cambiarla, reducirla primero:
+
+             php -r '$s=imagecreatefromjpeg("original.jpg");
+                     $w=1600; $h=(int)round(imagesy($s)*$w/imagesx($s));
+                     $d=imagecreatetruecolor($w,$h);
+                     imagecopyresampled($d,$s,0,0,0,0,$w,$h,imagesx($s),imagesy($s));
+                     imagejpeg($d,"assets/img/acceso.jpg",82);'
+
+           Debajo de 900 px la foto se va: en un móvil robaría la mitad de la
+           pantalla al formulario, que es a lo que se viene. */
+        .acceso { display: flex; min-height: 100vh; }
+
+        .acceso-foto {
+            flex: 1 1 58%;
+            background-image:
+                linear-gradient(200deg, rgba(9, 85, 160, .55), rgba(10, 79, 134, .78)),
+                url("/assets/img/acceso.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .acceso-panel {
+            flex: 0 0 clamp(360px, 42%, 560px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem 1.5rem;
+
+            /* Trama de puntos con dos halos del azul de la marca: se lee como
+               papel milimetrado, que es lo que hace esta aplicación —listas,
+               apartados y comprobaciones—, y deja el blanco de la tarjeta
+               destacando encima. Todo con gradientes: ni una imagen más. */
+            background:
+                radial-gradient(circle at 15% 10%, rgba(11, 109, 181, .16), transparent 46%),
+                radial-gradient(circle at 90% 88%, rgba(11, 109, 181, .12), transparent 44%),
+                radial-gradient(circle, rgba(11, 109, 181, .18) 1px, transparent 1.3px)
+                    0 0 / 22px 22px,
+                var(--bg);
+        }
+
+        @media (max-width: 900px) {
+            .acceso-foto { display: none; }
+            .acceso-panel {
+                flex: 1 1 100%;
+                /* Sin foto, el panel recupera el fondo de color: en un móvil
+                   un blanco de borde a borde queda desnudo. */
+                background:
+                    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M0 64L64 0M-8 8L8 -8M56 72L72 56' stroke='%23ffffff' stroke-opacity='.06' stroke-width='14' fill='none'/%3E%3C/svg%3E"),
+                    linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 55%, #0a4f86 100%);
+            }
+        }
+        .login-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            clip-path: var(--clip-card);
+            padding: 40px;
+            width: 100%;
+            max-width: 380px;
+            /* La tarjeta se levanta del fondo de color; sin sombra flotaría
+               pegada y el degradado se la comería. */
+            box-shadow: 0 18px 40px rgba(10, 40, 70, .28);
+        }
+        .login-logo { text-align: center; margin-bottom: 28px; }
+        .login-logo h1 {
+            font-size: 22px; font-weight: 700; margin: 0 0 4px;
+            text-transform: uppercase; letter-spacing: var(--tracking-wide);
+            text-shadow: var(--glow-text);
+        }
+        .login-logo p { font-size: 12px; color: var(--text-muted); margin: 0; }
+        /* El isotipo tiene barras negras, así que necesita
+           su disco claro para verse sobre el fondo oscuro. */
+        .marca-logo {
+            width: 56px; height: 56px; margin: 0 auto 14px; padding: 4px;
+            background: var(--brand-logo-bg); border-radius: 50%;
+        }
+        .marca-logo img { width: 100%; height: 100%; display: block; }
+        .login-logo h1.dominio {
+            text-transform: none; letter-spacing: .01em; font-size: 19px;
+        }
+        .form-label {
+            font-size: 12px; font-weight: 600; color: var(--text-muted);
+            margin-bottom: 8px; display: block;
+            text-transform: uppercase; letter-spacing: var(--tracking-wide);
+        }
+        .form-control {
+            background: var(--bg); border: 1px solid var(--border);
+            color: var(--text); border-radius: 0; padding: 10px 12px;
+        }
+        .form-control:focus {
+            background: var(--bg); border-color: var(--accent); color: var(--text);
+            box-shadow: 0 0 0 2px var(--accent-soft), var(--glow-accent); outline: none;
+        }
+        .btn-login {
+            background: var(--accent); color: var(--btn-on-accent); border: none;
+            width: 100%; padding: 10px; clip-path: var(--clip-button);
+            font-weight: 600; font-size: 13px; text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+            transition: background .15s, box-shadow .15s;
+        }
+        .btn-login:hover {
+            background: var(--accent-strong); color: var(--btn-on-accent);
+            box-shadow: var(--glow-accent);
+        }
+        .alert-danger {
+            background: var(--state-danger-bg); border: 1px solid var(--state-danger-border);
+            color: var(--state-danger); font-size: 12px; border-radius: 0; padding: 10px 14px;
+        }
+        /* 🔴 Las variables son `--state-success*`; `--state-ok` no existe en
+           theme.css, así que esto pintaba SIEMPRE el verde del fallback
+           —#3fb950, pensado para fondo oscuro— y sobre el claro se leía mal.
+           Con el nombre bueno, el verde lo pone el tema. */
+        .alert-success {
+            background: var(--state-success-bg);
+            border: 1px solid var(--state-success-border);
+            color: var(--state-success);
+            font-size: 12px; border-radius: 0; padding: 10px 14px; line-height: 1.6;
+        }
+        .form-check-label { font-size: 12px; color: var(--text-muted); }
+        /* Enlace de recuperación */
+        .auth-link {
+            display: block; text-align: right; margin-top: -6px; margin-bottom: 16px;
+            font-size: 11px; color: var(--text-muted); text-decoration: none;
+        }
+        .auth-link:hover { color: var(--accent); }
+/* Anadido para check: la lista de centros con el mismo lenguaje que el formulario */
+.centros-lista a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 14px; margin-bottom: 8px; background: var(--bg);
+    border: 1px solid var(--border); color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600; clip-path: var(--clip-button);
+    transition: border-color .15s, background .15s;
+}
+.centros-lista a:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+.centros-lista a i { color: var(--accent); }
+.alert-warning {
+    background: var(--state-danger-bg); border: 1px solid var(--state-danger-border);
+    color: var(--state-danger); font-size: 12px; border-radius: 0; padding: 10px 14px;
+}
+.auth-salir { display: block; text-align: center; margin-top: 16px; font-size: 11px; color: var(--text-muted); text-decoration: none; }
+.auth-salir:hover { color: var(--accent); }
