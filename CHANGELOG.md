@@ -1,5 +1,19 @@
 # CHANGELOG — rap.isorga.com
 
+## v0.010 — 2026-10-01
+### El selector de centro vuelve a la barra, y ahora es un desplegable
+
+Petición de Juan Miguel (2026-10-01). El chip del centro vuelve a ser **pulsable**, pero en vez de salir a la pantalla de elección abre un **desplegable en la propia barra** con **todos** mis centros activos. Los que tienen el módulo de esta aplicación a **0 salen igual, en gris y con un candado**, y no se pueden pulsar; el actual sale marcado.
+
+🔴 **Pulsar no concede nada.** El enlace va a `/auth/centro_envio.php`, que vuelve a comprobar **en base** el permiso del módulo antes de tocar la sesión: el «no pulsable» es cortesía para quien mira, no la puerta. Probado forzando por URL un centro sin el módulo — no cambia de centro y devuelve a la pantalla de elección.
+
+⚠️ **Se enseña también a quien entró desde ISORGA.** Algunas aplicaciones lo escondían en ese caso; es justo lo que se ha pedido activar.
+
+🔴 **La consulta agrupa por centro, y no es cosmético**: `usuariosxcentros` tiene **filas repetidas** para la misma pareja usuario-centro —medido: 23 parejas, 33 filas de más, hasta 7 para una sola— y sin agrupar el mismo centro salía dos veces en la lista. Se queda el nivel más alto de las copias.
+
+Sin JavaScript propio: es un desplegable de Bootstrap, que ya estaba cargado, vestido con una clase del tema que estaba escrita y no usaba nadie.
+
+
 ## v0.002 — 2026-09-30
 ### Todas las tablas con aspecto Excel
 

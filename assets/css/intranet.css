@@ -576,3 +576,30 @@ a:hover { color: var(--accent-strong); }
     border-top-color: var(--border);
     margin: .25rem 0;
 }
+
+/* ── Selector de centro de la barra (2026-10-01) ─────────────────────────
+   Reaprovecha `.app-cfg-menu`, que ya estaba en este fichero y no la usaba
+   nadie. Solo hacen falta tres cosas más: que el centro sin el módulo se vea
+   apagado y sin cursor de mano, que la lista no crezca sin fin cuando alguien
+   tiene treinta centros, y que en pantalla estrecha el botón se quede en icono
+   en vez de desaparecer — el `.topbar-centre` de workspace.css lo ocultaba bajo
+   1200px, y eso valía para una etiqueta, no para un control que hay que pulsar. */
+.app-cfg-menu.sb-centros {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.app-cfg-menu .dropdown-item.disabled {
+    color: var(--text-muted);
+    opacity: .65;
+    cursor: not-allowed;
+    background: transparent;
+}
+.topbar-centro-sel .app-nav-btn > span {
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media (max-width: 1200px) {
+    .topbar-centro-sel .app-nav-btn > span { display: none; }
+}

@@ -1,5 +1,5 @@
 <?php
-// GENERADO por scripts/lang_extraer.php (2026-09-30) desde /var/www/isorga-net/app/lang/en.php
+// GENERADO por scripts/lang_extraer.php (2026-10-01) desde /var/www/isorga-net/app/lang/en.php
 // + app/lang/_propias.php. No editar a mano: se sobrescribe.
 $language['AG_G_AUDITOR'] = 'What will the auditor ask me?';
 $language['AG_G_HOY'] = 'What do I have to do today?';
@@ -53,6 +53,7 @@ $language['RAP_AYUDA_IR_A'] = 'Pick a destination · Esc to close';
 $language['RAP_BAJA'] = 'Your account is not active.';
 $language['RAP_BUSCAR_PANTALLA'] = 'Search people, positions, training…';
 $language['RAP_CAMBIAR_CENTRO'] = 'Change';
+$language['RAP_CENTRO_SIN_MODULO'] = 'You do not have this module in this site';
 $language['RAP_CERRAR'] = 'Close';
 $language['RAP_CERRAR_MENU'] = 'Close menu';
 $language['RAP_COLAPSAR_MENU'] = 'Collapse menu';

@@ -1,5 +1,5 @@
 <?php
-// GENERADO por scripts/lang_extraer.php (2026-09-30) desde /var/www/isorga-net/app/lang/fr.php
+// GENERADO por scripts/lang_extraer.php (2026-10-01) desde /var/www/isorga-net/app/lang/fr.php
 // + app/lang/_propias.php. No editar a mano: se sobrescribe.
 $language['AG_G_AUDITOR'] = 'Que va me demander l\'auditeur ?';
 $language['AG_G_HOY'] = 'Qu\'est-ce que je dois faire aujourd\'hui ?';
@@ -53,6 +53,7 @@ $language['RAP_AYUDA_IR_A'] = 'Choisissez une destination · Échap pour fermer'
 $language['RAP_BAJA'] = 'Votre compte n\'est pas actif.';
 $language['RAP_BUSCAR_PANTALLA'] = 'Chercher personnes, postes, formation…';
 $language['RAP_CAMBIAR_CENTRO'] = 'Changer';
+$language['RAP_CENTRO_SIN_MODULO'] = 'Vous n\'avez pas ce module dans ce site';
 $language['RAP_CERRAR'] = 'Fermer';
 $language['RAP_CERRAR_MENU'] = 'Fermer le menu';
 $language['RAP_COLAPSAR_MENU'] = 'Réduire le menu';

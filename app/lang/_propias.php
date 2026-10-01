@@ -13,6 +13,7 @@ return [
  'RAP_SIN_CENTRO' => array (   'es' => 'Tu cuenta no tiene Envases y RAP en ningún centro.',   'ca' => 'El teu compte no té Envasos i RAP en cap centre.',   'en' => 'Your account has no Packaging and EPR access in any site.',   'fr' => 'Votre compte n\'a accès aux Emballages et REP dans aucun site.', ),
  'RAP_ELEGIR_CENTRO' => array (   'es' => 'Elige el centro',   'ca' => 'Tria el centre',   'en' => 'Choose a site',   'fr' => 'Choisissez le site', ),
  'RAP_CAMBIAR_CENTRO' => array (   'es' => 'Cambiar',   'ca' => 'Canviar',   'en' => 'Change',   'fr' => 'Changer', ),
+ 'RAP_CENTRO_SIN_MODULO' => array (   'es' => 'En este centro no tienes este módulo',   'ca' => 'En aquest centre no tens aquest mòdul',   'en' => 'You do not have this module in this site',   'fr' => 'Vous n\'avez pas ce module dans ce site', ),
  'RAP_SALIR' => array (   'es' => 'Salir',   'ca' => 'Sortir',   'en' => 'Sign out',   'fr' => 'Quitter', ),
  'RAP_VOLVER_ISORGA' => array (   'es' => 'Volver a ISORGA',   'ca' => 'Tornar a ISORGA',   'en' => 'Back to ISORGA',   'fr' => 'Revenir à ISORGA', ),
  'RAP_SUBTITULO' => array (   'es' => 'Envases y RAP de ISORGA',   'ca' => 'Envasos i RAP d\'ISORGA',   'en' => 'ISORGA Packaging and EPR',   'fr' => 'Emballages et REP ISORGA', ),

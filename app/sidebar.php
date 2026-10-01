@@ -29,10 +29,64 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
     <span class="topbar-title"><?= $sbE($sbTitulo) ?></span>
     <div class="topbar-spacer"></div>
     <button class="app-nav-btn" type="button" id="quick-open" aria-haspopup="dialog"><i class="bi bi-search" aria-hidden="true"></i><span><?= $sbE($language['RAP_IR_A'] ?? 'Ir a…') ?></span><kbd>Ctrl K</kbd></button>
-    <?php if ($sbVarios): ?>
-    <a class="app-nav-btn topbar-centre" href="/auth/centro.php" title="<?= $sbE($language['RAP_CAMBIAR_CENTRO'] ?? 'Cambiar') ?>">
-        <i class="bi bi-building"></i><span><?= $sbE($sbCentro) ?></span><i class="bi bi-arrow-left-right"></i>
-    </a>
+    <?php
+    // ── Selector de centro ───────────────────────────────────────────────────────
+    // Petición de Juan Miguel (2026-10-01): en vez de salir a la pantalla de elección,
+    // un desplegable aquí mismo con TODOS mis centros. Los que tienen el módulo de esta
+    // app a 0 **salen igual, pero no se pueden pulsar**.
+    //
+    // 🔴 El número de módulo sale de APP_MODULO y se interpola con (int): el nombre de
+    //    columna NUNCA viene de la petición, así que no hay por dónde inyectar.
+    // 🔴 Pulsar no concede nada. Lleva a /auth/centro_envio.php, que vuelve a comprobar
+    //    en base el permiso del módulo antes de tocar la sesión: el «no pulsable» es
+    //    cortesía para la persona, no la puerta. La puerta sigue donde estaba.
+    // ⚠️ Se enseña a todo el mundo, también a quien entró desde ISORGA: antes algunas apps
+    //    lo escondían en ese caso (`!$sbDesdeIsorga`) y es justo lo que se ha pedido activar.
+    $sbMod = (int) (defined('APP_MODULO') ? APP_MODULO : 0);
+    $sbCentros = [];
+    if ($sbMod > 0) {
+        // 🔴 `GROUP BY` + `MAX`, no un SELECT pelado: `usuariosxcentros` TIENE filas repetidas
+        //    para la misma pareja usuario-centro — medido el 2026-10-01: 23 parejas con 33 filas
+        //    de más, hasta 7 para una sola (usuario 2553 en el centro 4246). Sin agrupar, el mismo
+        //    centro salía dos veces en el desplegable (visto en flota con el usuario 2). `MAX` se
+        //    queda además con el nivel más alto, que es lo que vale cuando las copias discrepan.
+        $sbSt = Conectar::varias(
+            'SELECT c.centroId, c.centroNombre, MAX(uc.modulo' . $sbMod . ') AS nivel
+               FROM usuariosxcentros uc
+               JOIN centros c ON c.centroId = uc.ucCentro
+              WHERE uc.ucUsuario = ? AND c.centroActivo = 1
+              GROUP BY c.centroId, c.centroNombre
+              ORDER BY c.centroNombre',
+            [(int) ($_SESSION['user']['NoUsuario'] ?? 0)]
+        );
+        $sbCentros = $sbSt ? $sbSt->fetchAll(PDO::FETCH_ASSOC) : [];
+    }
+    $sbActualId = (int) ($_SESSION['centro']['NoCentro'] ?? 0);
+    ?>
+    <?php if (count($sbCentros) > 1): ?>
+    <?php // Desplegable de Bootstrap (ya cargado en app/inc_footer.php) vestido con `.app-cfg-menu`,
+          // que estaba en el CSS y no la usaba nadie. Cero JavaScript propio. ?>
+    <div class="dropdown topbar-centro-sel">
+        <button class="app-nav-btn" type="button" data-bs-toggle="dropdown" data-bs-display="static"
+                aria-expanded="false" title="<?= $sbE($language['RAP_CAMBIAR_CENTRO'] ?? 'Cambiar') ?>">
+            <i class="bi bi-building"></i><span><?= $sbE($sbCentro) ?></span><i class="bi bi-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end app-cfg-menu sb-centros">
+            <li><h6 class="dropdown-header"><?= $sbE($language['RAP_ELEGIR_CENTRO'] ?? 'Elige el centro') ?></h6></li>
+            <?php foreach ($sbCentros as $sbC): $sbCid = (int) $sbC['centroId']; ?>
+                <?php if ((int) $sbC['nivel'] < 1): ?>
+            <li><span class="dropdown-item disabled" aria-disabled="true"
+                      title="<?= $sbE($language['RAP_CENTRO_SIN_MODULO'] ?? 'En este centro no tienes este módulo') ?>">
+                <i class="bi bi-lock"></i> <?= $sbE($sbC['centroNombre']) ?>
+            </span></li>
+                <?php elseif ($sbCid === $sbActualId): ?>
+            <li><span class="dropdown-item active" aria-current="true"><i class="bi bi-check2"></i> <?= $sbE($sbC['centroNombre']) ?></span></li>
+                <?php else: ?>
+            <li><a class="dropdown-item" href="/auth/centro_envio.php?id=<?= $sbCid ?>"><i class="bi bi-building"></i> <?= $sbE($sbC['centroNombre']) ?></a></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
     <?php else: ?>
     <span class="app-nav-btn topbar-centre" style="pointer-events:none"><i class="bi bi-building"></i><span><?= $sbE($sbCentro) ?></span></span>
     <?php endif; ?>
