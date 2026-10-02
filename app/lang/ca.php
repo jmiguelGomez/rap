@@ -84,6 +84,7 @@ $language['RAP_SALIR'] = 'Sortir';
 $language['RAP_SALTAR'] = 'Salta al contingut';
 $language['RAP_SIN_CENTRO'] = 'El teu compte no té Envasos i RAP en cap centre.';
 $language['RAP_SIN_PANTALLAS'] = 'No hi ha pantalles amb aquest nom.';
+$language['RAP_SOLO_ISORGA'] = 'A aquesta aplicació s\'hi entra des d\'ISORGA: obre isorga.com, entra al teu centre i prem la targeta corresponent.';
 $language['RAP_SUBTITULO'] = 'Envasos i RAP d\'ISORGA';
 $language['RAP_TU_ACCESO'] = 'El teu accés';
 $language['RAP_VOLVER_ISORGA'] = 'Tornar a ISORGA';

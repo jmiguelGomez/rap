@@ -84,6 +84,7 @@ $language['RAP_SALIR'] = 'Sign out';
 $language['RAP_SALTAR'] = 'Skip to content';
 $language['RAP_SIN_CENTRO'] = 'Your account has no Packaging and EPR access in any site.';
 $language['RAP_SIN_PANTALLAS'] = 'No screens with that name.';
+$language['RAP_SOLO_ISORGA'] = 'You sign in to this app from ISORGA: open isorga.com, enter your site and click the matching card.';
 $language['RAP_SUBTITULO'] = 'ISORGA Packaging and EPR';
 $language['RAP_TU_ACCESO'] = 'Your access';
 $language['RAP_VOLVER_ISORGA'] = 'Back to ISORGA';

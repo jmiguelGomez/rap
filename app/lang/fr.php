@@ -84,6 +84,7 @@ $language['RAP_SALIR'] = 'Quitter';
 $language['RAP_SALTAR'] = 'Aller au contenu';
 $language['RAP_SIN_CENTRO'] = 'Votre compte n\'a accès aux Emballages et REP dans aucun site.';
 $language['RAP_SIN_PANTALLAS'] = 'Aucun écran avec ce nom.';
+$language['RAP_SOLO_ISORGA'] = 'On accède à cette application depuis ISORGA : ouvrez isorga.com, entrez dans votre site et cliquez sur la carte correspondante.';
 $language['RAP_SUBTITULO'] = 'Emballages et REP ISORGA';
 $language['RAP_TU_ACCESO'] = 'Votre accès';
 $language['RAP_VOLVER_ISORGA'] = 'Revenir à ISORGA';

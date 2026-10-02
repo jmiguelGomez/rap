@@ -49,4 +49,5 @@ return [
  'M21_PLAN_ALTA_ERROR' => array (   'es' => 'No se pudo guardar la formación. Inténtalo de nuevo.',   'ca' => 'No s’ha pogut desar la formació. Torna-ho a provar.',   'en' => 'The training could not be saved. Please try again.',   'fr' => 'La formation n’a pas pu être enregistrée. Veuillez réessayer.', ),
  'RAP_TU_ACCESO' => array (   'es' => 'Tu acceso',   'ca' => 'El teu accés',   'en' => 'Your access',   'fr' => 'Votre accès', ),
  'RAP_NIVEL_CENTRO' => array (   'es' => 'nivel en este centro',   'ca' => 'nivell en aquest centre',   'en' => 'level at this site',   'fr' => 'niveau sur ce site', ),
+ 'RAP_SOLO_ISORGA' => array (   'es' => 'A esta aplicación se entra desde ISORGA: abre isorga.com, entra en tu centro y pulsa la tarjeta correspondiente.',   'ca' => 'A aquesta aplicació s\'hi entra des d\'ISORGA: obre isorga.com, entra al teu centre i prem la targeta corresponent.',   'en' => 'You sign in to this app from ISORGA: open isorga.com, enter your site and click the matching card.',   'fr' => 'On accède à cette application depuis ISORGA : ouvrez isorga.com, entrez dans votre site et cliquez sur la carte correspondante.', ),
 ];

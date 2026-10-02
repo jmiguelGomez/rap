@@ -1,6 +1,8 @@
 <?php
 // Login con la cuenta de ISORGA. Aspecto: la pantalla partida de audit.isorga.com/auth/login.php
 // (foto a la izquierda, tarjeta a la derecha); el CSS está en assets/css/acceso.css.
+// 🔴 Con APP_LOGIN_CONTRASENA = false (app/config/config.php) no se pinta el formulario: a la app se entra solo
+// desde ISORGA (auth/sso.php). El formulario se queda aquí para poder reactivarlo cambiando la constante.
 $RAP_PUBLICA = true;
 require_once __DIR__ . '/../app/sesion.php';
 require_once __DIR__ . '/../app/compat.php';
@@ -20,6 +22,7 @@ require __DIR__ . '/../app/acceso_cabeza.php';
         <p><?= $h($language['RAP_SUBTITULO'] ?? '') ?></p>
     </div>
     <?php if ($aviso): ?><div class="alert alert-danger mb-3"><?= $h($aviso) ?></div><?php endif; ?>
+    <?php if (APP_LOGIN_CONTRASENA): ?>
     <form method="post" action="/auth/login_envio.php" autocomplete="off">
         <input type="hidden" name="csrf" value="<?= $h($_SESSION['csrf_login']) ?>">
         <div class="mb-3">
@@ -33,6 +36,9 @@ require __DIR__ . '/../app/acceso_cabeza.php';
         <a href="/auth/recuperar.php" class="auth-link"><?= $h($language['RAP_OLVIDE'] ?? '') ?></a>
         <button class="btn btn-login" type="submit"><i class="fas fa-sign-in-alt me-1"></i> <?= $h($language['RAP_ENTRAR'] ?? 'Entrar') ?></button>
     </form>
+    <?php else: ?>
+    <p class="text-body-secondary"><?= $h($language['RAP_SOLO_ISORGA'] ?? '') ?></p>
+    <?php endif; ?>
     <a class="btn btn-outline-primary w-100 mt-3" href="https://isorga.com/0/rap_entrar.php">
         <?= $h($language['RAP_ENTRAR'] ?? 'Entrar') ?> · ISORGA
     </a>

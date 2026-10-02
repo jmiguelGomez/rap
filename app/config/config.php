@@ -3,9 +3,12 @@
 // Generada por isorga-net/scripts/satelite_crear.php (2026-09-30) desde el molde de check.isorga.com.
 if (defined('APP_NOMBRE')) { return; }
 define('APP_NOMBRE', 'RAP · ISORGA');
-define('APP_VERSION', 'v0.010');            // sube en cada commit (CHANGELOG.md)
+define('APP_VERSION', 'v0.011');            // sube en cada commit (CHANGELOG.md)
 define('APP_MODULO', 42);                   // usuariosxcentros.modulo42 es la puerta
 define('APP_INACTIVIDAD_MINUTOS', 60);      // como la sesión de ISORGA (gc_maxlifetime 3600)
 define('APP_URL_ISORGA', 'https://isorga.com');
+// false = sin login con contraseña: se entra solo desde ISORGA (auth/sso.php); login.php no pinta el formulario y
+// login_envio.php da 404. true lo reactiva (manifiesto: login_contrasena). Decisión de Juan Miguel (2026-10-02).
+define('APP_LOGIN_CONTRASENA', false);
 // Cambio USD→EUR para el coste de la IA en llm_llamadas: el MISMO valor que LLM_USD_EUR_RATE de isorga-net/app/config/variables.php.
 if (!defined('LLM_USD_EUR_RATE')) define('LLM_USD_EUR_RATE', 0.92);

@@ -1,5 +1,13 @@
 # CHANGELOG — rap.isorga.com
 
+## v0.011 — 2026-10-02
+### Sin login con contraseña: a la app se entra solo desde ISORGA
+
+Decisión de Juan Miguel (2026-10-02): a todas las apps se entra a través de isorga.com, salvo el CAE. Nueva constante **`APP_LOGIN_CONTRASENA`** en `app/config/config.php` (a `false`): `auth/login.php` no pinta el formulario —explica que se entra desde ISORGA y deja el botón «Entrar · ISORGA»— y `auth/login_envio.php` contesta **404**. **El formulario sigue en el fichero**: ponerla a `true` lo reactiva (o `'login_contrasena' => true` en `isorga-net/scripts/satelites/rap.php` y relanzar el generador).
+
+Probado por HTTP: login sin `<form>`, `POST /auth/login_envio.php` → 404, enlace firmado desde ISORGA → panel.
+
+
 ## v0.010 — 2026-10-01
 ### El selector de centro vuelve a la barra, y ahora es un desplegable
 
