@@ -9,6 +9,14 @@ require_once __DIR__ . '/../app/compat.php';
 if (!empty($_SESSION['user']['autenticado'])) { header('Location: /index.php'); exit; }
 $_SESSION['csrf_login'] = $_SESSION['csrf_login'] ?? bin2hex(random_bytes(16));
 $h = static fn($v) => htmlspecialchars((string) $v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+// Sin login con contraseña no hay pantalla de acceso propia: sin sesión, por inactividad o de baja, al login de ISORGA
+// (con su aviso de sesión caducada cuando toca). Así ninguna entrada por URL se queda en la app.
+if (!APP_LOGIN_CONTRASENA) {
+    $inactividad = (($_SESSION['aviso'] ?? $_GET['aviso'] ?? '') === 'inactividad');
+    unset($_SESSION['aviso']);
+    header('Location: ' . APP_URL_ISORGA . '/login.php' . ($inactividad ? '?timeout=1' : ''));
+    exit;
+}
 $avisos = ['error' => $language['RAP_ERROR_LOGIN'] ?? '', 'baja' => $language['RAP_BAJA'] ?? '',
            'inactividad' => $language['RAP_INACTIVIDAD'] ?? '', 'sincentro' => $language['RAP_SIN_CENTRO'] ?? ''];
 $aviso = $avisos[$_GET['aviso'] ?? ($_SESSION['aviso'] ?? '')] ?? null;

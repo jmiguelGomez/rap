@@ -1,5 +1,16 @@
 # CHANGELOG — rap.isorga.com
 
+## v0.012 — 2026-10-02
+### Sin sesión, al salir y por inactividad: al login de ISORGA
+
+Decisión de Juan Miguel (2026-10-02): a la app se entra solo por isorga.com, así que con `APP_LOGIN_CONTRASENA = false`:
+- quien llega por la URL sin sesión —la raíz, la portada o cualquier pantalla— va a **`https://isorga.com/login.php`**; la portada pública deja de verse (decisión suya);
+- **«Salir»** lleva siempre a `isorga.com/login.php`;
+- la sesión **caducada por inactividad** va a `isorga.com/login.php?timeout=1`, que enseña el aviso de sesión caducada de ISORGA.
+
+Todo en `auth/login.php`, `auth/logout.php` y `app/portada_plantilla.php`, detrás del mismo interruptor: con `true` vuelven el login, la portada y el «Salir» de antes.
+
+
 ## v0.011 — 2026-10-02
 ### Sin login con contraseña: a la app se entra solo desde ISORGA
 

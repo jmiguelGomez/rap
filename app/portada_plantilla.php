@@ -1,4 +1,8 @@
 <?php
+// 🔴 Sin login con contraseña (APP_LOGIN_CONTRASENA = false) la app no enseña portada: quien llega por la URL va al
+// login de ISORGA, que es por donde se entra (2026-10-02). Con true vuelve la portada tal cual.
+require_once __DIR__ . '/config/config.php';
+if (!APP_LOGIN_CONTRASENA) { header('Location: ' . APP_URL_ISORGA . '/login.php'); exit; }
 /** Portada pública: solo contenido editorial, sin base de datos ni sesión. */
 $h = static fn($value): string => htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $schema = [
