@@ -22,7 +22,7 @@ if (count($p) !== 5 || $p[0] !== '1') $fuera('formato');
 [, $usuario, $centro, $caduca, $nonce] = $p;
 $usuario = (int) $usuario; $centro = (int) $centro; $caduca = (int) $caduca;
 if ($caduca < time() || $caduca > time() + 120 || !preg_match('/^[a-f0-9]{32}$/', $nonce) || $usuario <= 0 || $centro <= 0) $fuera('caducado');
-$dir = sys_get_temp_dir() . '/check_sso';
+$dir = sys_get_temp_dir() . '/rap_sso';
 if (!is_dir($dir)) @mkdir($dir, 0700, true);
 foreach (glob($dir . '/*') ?: [] as $v) { if (filemtime($v) < time() - 300) @unlink($v); }
 if (file_exists($dir . '/' . $nonce) || @file_put_contents($dir . '/' . $nonce, (string) time(), LOCK_EX) === false) $fuera('reutilizado');
