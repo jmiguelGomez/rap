@@ -7,6 +7,7 @@
 ob_start();
 require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/compat.php';
+require_once __DIR__ . '/style_guide.php';   // clases de tarjetas, tablas y botones ($CARD_FULL, $BTN_IMPRIMIR…) que usa el código portado de ISORGA (2026-10-03: faltaba y salían vacías)
 $rapH = static fn($v) => htmlspecialchars((string) $v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__DIR__ . '/../assets/' . $f);
 ?><!DOCTYPE html>
