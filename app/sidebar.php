@@ -124,23 +124,24 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
 
     <?php if ($sbNombre !== ''): ?>
     <div class="sb-foot">
-        <div class="sb-user"><span class="sb-ico"><i class="bi bi-person"></i></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></div>
         <?php
-        // «Cambio usuario» (2026-10-03, Juan Miguel): lo mismo que en el menú de usuario de ISORGA, SOLO para cuentas de
-        // soporte (usuarios.soporte = 1, leído de la base, no de la sesión). Lleva a la pantalla de ISORGA de siempre
-        // (0/usuarios_soporte.php) diciendo de qué app viene; tras elegir a la persona y el centro, ISORGA vuelve a
-        // entrar aquí como ella por la puerta firmada. Toda la comprobación la hacen 0/usuarios_soporte.php y
-        // 0/login_entrada.php. ⚠️ Se ve si el usuario DE LA APP es de soporte: estando ya suplantado, la cuenta es la
-        // del cliente y no sale (para cambiar otra vez, desde ISORGA).
-        $sbSoporte = false;
-        if ((int) ($_SESSION['user']['NoUsuario'] ?? 0) > 0) {
+        // «Cambio usuario» (2026-10-03, Juan Miguel): con soporte, el ICONO Y EL NOMBRE del usuario son el enlace (lo mismo
+        // que «Cambio usuario» en el menú de usuario de ISORGA). Soporte = el usuario de la app tiene usuarios.soporte = 1,
+        // o en ISORGA la sesión es de soporte aunque esté actuando como otra persona (marca `s` firmada en la entrada,
+        // auth/sso.php → $_SESSION['soporte_isorga']). Lleva a la pantalla de ISORGA de siempre (0/usuarios_soporte.php),
+        // diciendo de qué app viene; tras elegir persona y centro, ISORGA vuelve a entrar aquí como ella. Toda la
+        // comprobación la hacen 0/usuarios_soporte.php y 0/login_entrada.php. Sin soporte, el nombre se ve como siempre.
+        $sbSoporte = !empty($_SESSION['soporte_isorga']);
+        if (!$sbSoporte && (int) ($_SESSION['user']['NoUsuario'] ?? 0) > 0) {
             $sbSop = Conectar::una('SELECT soporte FROM usuarios WHERE usuarioId = ? AND usuarioActivo = 1', [(int) $_SESSION['user']['NoUsuario']]);
             $sbSoporte = $sbSop && (int) $sbSop['soporte'] === 1;
         }
-        if ($sbSoporte): ?>
-        <a class="sb-link" href="<?= $sbE((defined('APP_URL_ISORGA') ? APP_URL_ISORGA : 'https://isorga.com') . '/0/usuarios_soporte.php?app=' . basename(dirname(__DIR__))) ?>" title="Cambio usuario">
-            <span class="sb-ico" aria-hidden="true"><i class="bi bi-person-gear"></i></span><span class="sb-txt">Cambio usuario</span>
-        </a>
+        $sbCambio = (defined('APP_URL_ISORGA') ? APP_URL_ISORGA : 'https://isorga.com') . '/0/usuarios_soporte.php?app=' . basename(dirname(__DIR__));
+        ?>
+        <?php if ($sbSoporte): ?>
+        <a class="sb-user sb-user-cambio" href="<?= $sbE($sbCambio) ?>" title="Cambio usuario" style="text-decoration:none;cursor:pointer"><span class="sb-ico"><i class="bi bi-person"></i></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></a>
+        <?php else: ?>
+        <div class="sb-user"><span class="sb-ico"><i class="bi bi-person"></i></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></div>
         <?php endif; ?>
     </div>
     <?php endif; ?>

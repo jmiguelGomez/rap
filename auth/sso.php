@@ -18,8 +18,12 @@ if (strlen($secret) < 32 || !preg_match('/^[a-f0-9]{64}$/', $s) || $d === '' || 
 $carga = base64_decode(strtr($d, '-_', '+/'), true);
 if ($carga === false || !hash_equals(hash_hmac('sha256', $carga, $secret), $s)) $fuera('firma');
 $p = explode('|', $carga);
-if (count($p) !== 5 || $p[0] !== '1') $fuera('formato');
-[, $usuario, $centro, $caduca, $nonce] = $p;
+// 2026-10-03: un 6.º campo opcional `s` dice que en ISORGA la sesión es de SOPORTE (0/<app>_entrar.php lo añade).
+// Va dentro de la carga firmada, así que no se puede añadir desde fuera. Solo sirve para enseñar «Cambio usuario»
+// en el pie del menú; no concede nada aquí (la suplantación la hace y la comprueba ISORGA).
+if (!(count($p) === 5 || (count($p) === 6 && $p[5] === 's')) || $p[0] !== '1') $fuera('formato');
+$soporteIsorga = count($p) === 6;
+[, $usuario, $centro, $caduca, $nonce] = array_slice($p, 0, 5);
 $usuario = (int) $usuario; $centro = (int) $centro; $caduca = (int) $caduca;
 if ($caduca < time() || $caduca > time() + 120 || !preg_match('/^[a-f0-9]{32}$/', $nonce) || $usuario <= 0 || $centro <= 0) $fuera('caducado');
 $dir = sys_get_temp_dir() . '/rap_sso';
@@ -30,5 +34,6 @@ $u = Conectar::una('SELECT * FROM usuarios WHERE usuarioId = ? AND usuarioActivo
 if (!$u || (int) ($u['bloqueado'] ?? 0) === 1) { header('Location: /auth/login.php?aviso=baja'); exit; }
 rap_abrir_usuario($u, true);
 if (!rap_abrir_centro($usuario, $centro)) { header('Location: /auth/centro.php'); exit; }
+$_SESSION['soporte_isorga'] = $soporteIsorga;
 header('Location: /index.php');
 exit;
