@@ -39,7 +39,32 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
             style="background:none;border:0;padding:0 .25rem;line-height:0;cursor:pointer">
         <img src="/assets/img/isorgi_3d_72.png" alt="" style="width:2.25rem;height:2.25rem;object-fit:contain;display:block">
     </button>
+    <?php // BOX documental central: conserva usuario y centro mediante un acceso firmado.
+          if (defined('APP_BOX') && APP_BOX && (int) ($_SESSION['centro']['modulo10'] ?? 0) >= 1): ?>
+    <a class="app-nav-btn" href="/auth/box_entrar.php"
+       title="<?= $sbE($language['BOX_DOCUMENTAL'] ?? 'Box documental') ?>">
+        <i class="bi bi-folder2-open" aria-hidden="true"></i><span><?= $sbE($language['BOX_DOCUMENTAL'] ?? 'Box documental') ?></span>
+    </a>
+    <?php endif; ?>
+    <?php // ACCIONES (2026-10-03, Juan Miguel): como en la cabecera de index_2, entra en ac.isorga.com igual que el botón de BOX
+          //    entra en box.isorga.com: auth/ac_entrar.php firma usuario y centro (60 s, un solo uso) y «Volver» regresa aquí.
+          if ((int) ($_SESSION['centro']['modulo11'] ?? 0) >= 1): ?>
+    <a class="app-nav-btn" href="/auth/ac_entrar.php"
+       title="<?= $sbE($language['ACCIONES'] ?? 'Acciones') ?>">
+        <i class="bi bi-list-check" aria-hidden="true"></i><span><?= $sbE($language['ACCIONES'] ?? 'Acciones') ?></span>
+    </a>
+    <?php endif; ?>
+    <?php // 🔴 «Ir a…» (Ctrl K) RETIRADO de la barra por orden de Juan Miguel (2026-10-01; en esta app, el 2026-10-03).
+          //    El marcado se deja dentro de un `if (false)` en vez de borrarlo: vuelve cambiando una
+          //    palabra. NO se puede comentar con una pareja barra-asterisco: el marcado lleva dentro
+          //    etiquetas de eco cortas, y la que las cierra cerraría también el comentario — el HTML
+          //    saldría a la página. (Me pasó al escribir esto: el propio aviso llevaba esa etiqueta
+          //    dentro y tumbó las ocho apps con un 500.)
+          //    El diálogo y el atajo Ctrl K siguen montados: lo que se va es el botón. El JS ya lo
+          //    tenía previsto (`getElementById('quick-open')?.addEventListener`), así que no se rompe. ?>
+    <?php if (false): ?>
     <button class="app-nav-btn" type="button" id="quick-open" aria-haspopup="dialog"><i class="bi bi-search" aria-hidden="true"></i><span><?= $sbE($language['RAP_IR_A'] ?? 'Ir a…') ?></span><kbd>Ctrl K</kbd></button>
+    <?php endif; ?>
     <?php
     // ── Selector de centro ───────────────────────────────────────────────────────
     // Petición de Juan Miguel (2026-10-01): en vez de salir a la pantalla de elección,
