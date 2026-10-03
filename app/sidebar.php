@@ -139,9 +139,9 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
         $sbCambio = (defined('APP_URL_ISORGA') ? APP_URL_ISORGA : 'https://isorga.com') . '/0/usuarios_soporte.php?app=' . basename(dirname(__DIR__));
         ?>
         <?php if ($sbSoporte): ?>
-        <a class="sb-user sb-user-cambio" href="<?= $sbE($sbCambio) ?>" title="Cambio usuario" style="text-decoration:none;cursor:pointer"><span class="sb-ico"><i class="bi bi-person"></i></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></a>
+        <a class="sb-user sb-user-cambio" href="<?= $sbE($sbCambio) ?>" title="Cambio usuario" style="text-decoration:none;cursor:pointer"><span class="sb-ico"><img src="/auth/foto.php" alt="" class="sb-foto" style="width:1.4rem;height:1.4rem;border-radius:50%;object-fit:cover;display:block;margin:0 auto"></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></a>
         <?php else: ?>
-        <div class="sb-user"><span class="sb-ico"><i class="bi bi-person"></i></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></div>
+        <div class="sb-user"><span class="sb-ico"><img src="/auth/foto.php" alt="" class="sb-foto" style="width:1.4rem;height:1.4rem;border-radius:50%;object-fit:cover;display:block;margin:0 auto"></span><span class="sb-txt"><?= $sbE($sbNombre) ?></span></div>
         <?php endif; ?>
     </div>
     <?php endif; ?>
