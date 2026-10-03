@@ -64,3 +64,5 @@ require_once __DIR__ . '/config/logo_pdf.php';
 
 // Funciones de ISORGA que necesita el módulo portado (generado por scripts/rap_portar.php)
 if (is_file(__DIR__ . '/funciones_isorga.php')) require_once __DIR__ . '/funciones_isorga.php';
+// Constantes BRAND_* de ISORGA (app/config/branding.php), si el porte las trajo: las usan pantallas y PDF del módulo
+if (is_file(__DIR__ . '/config/branding.php')) require_once __DIR__ . '/config/branding.php';

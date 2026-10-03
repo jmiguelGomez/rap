@@ -16,7 +16,8 @@ $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__D
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title><?= $rapH(APP_NOMBRE . ' · ' . $NbCentro) ?></title>
+    <?php // El título lo compone la app («<nombre> · <centro>») salvo que fije APP_TITULO entero. ?>
+    <title><?= $rapH(defined('APP_TITULO') ? APP_TITULO : APP_NOMBRE . ' · ' . $NbCentro) ?></title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">

@@ -11,6 +11,25 @@ $rapDtIdioma = ['es' => 'es-ES', 'ca' => 'ca', 'en' => 'en-GB', 'fr' => 'fr-FR']
 <?php // Gráficos: la misma versión que audit (pie.php) y los valores por defecto de ISORGA (copia de assets/js/isorga-chart-defaults.js) ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="/assets/js/isorga-chart-defaults.js"></script>
+<?php /*
+  FullCalendar 6.1.15 — lo pide `calendario.php` (y en M19 también `index.php`), que llegan
+  COPIADAS de ISORGA y hacen `new FullCalendar.Calendar(...)`. Sin estos scripts la pantalla
+  entraba por su propio `catch` y enseñaba el aviso de error en vez del calendario.
+
+  🔴 SIN hojas de estilo, y no es un olvido: FullCalendar 6 **inyecta su CSS desde el JS**.
+     Los cinco `<link ... index.global.min.css>` que `app/includes/head.php` de ISORGA sigue
+     cargando devuelven **404** — medido el 2026-09-30 —, así que copiarlos aquí habría sido
+     añadir cinco peticiones muertas a cada página.
+
+  Cinco plugins, no los siete de ISORGA: las pantallas usan `dayGridMonth`, `listYear` y
+  `themeSystem: 'bootstrap5'`. `timegrid` e `interaction` no hacen falta (nada arrastra ni
+  selecciona; `eventClick` funciona sin el plugin de interacción en la v6).
+*/ ?>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
 <script>
 var DT_LANG_URL = 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/<?= $rapDtIdioma ?>.json';
 function initDataTableCompact(id, extra) {

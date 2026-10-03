@@ -608,6 +608,43 @@ html[data-bs-theme="dark"] .tabulator .tabulator-row.tabulator-selected:hover {
     letter-spacing: 0.03em;
 }
 
+/* ---------------------------------------------------------------------------
+   Botones más pequeños en TODA la aplicación — petición de Juan Miguel (2026-09-30).
+
+   🔴 Se hace AQUÍ, en el CSS propio de la app, y NO en las pantallas: las pantallas se
+      GENERAN desde su módulo de ISORGA por `scripts/<pfx>_portar.php`, así que cualquier
+      clase que se les cambiara a mano se perdería en el siguiente porte. Y tampoco se
+      toca el CSS de ISORGA: allí no se ha pedido.
+
+   ⚠️ Este comentario NO nombra un módulo ni un porteador concretos A PROPÓSITO: el
+      fichero se copia tal cual a cada app que nace del molde, y la primera versión decía
+      «desde `19/*.php`» — cierto en check y falso en las otras cuatro, que son los módulos
+      8, 3, 18 y 42. Un comentario que miente es peor que no tener ninguno.
+
+   🔴 Se tocan las VARIABLES de Bootstrap (`--bs-btn-*`), no `padding`/`font-size`
+      directos: así siguen ganando las reglas más específicas que ya existen —en
+      particular `table.isg-excel .btn-sm` (más abajo), que deja los botones de
+      dentro de las rejillas todavía más pequeños— en vez de pelearse con ellas.
+
+   🔴 Y como esta app es además el MOLDE del que `satelite_crear.php` saca las nuevas, los
+      botones pequeños los heredan todas las que nazcan a partir de ahora.
+   --------------------------------------------------------------------------- */
+.btn {
+    --bs-btn-padding-y:  .25rem;     /* Bootstrap: .375rem */
+    --bs-btn-padding-x:  .65rem;     /* Bootstrap: .75rem  */
+    --bs-btn-font-size:  .8125rem;   /* Bootstrap: 1rem (16px) → 13px */
+    --bs-btn-border-radius: .3rem;
+}
+
+.btn-sm {
+    --bs-btn-padding-y:  .15rem;     /* Bootstrap: .25rem */
+    --bs-btn-padding-x:  .45rem;     /* Bootstrap: .5rem  */
+    --bs-btn-font-size:  .75rem;     /* Bootstrap: .875rem → 12px */
+}
+
+/* Los iconos sueltos dentro de un botón no deben crecer por su cuenta. */
+.btn > i, .btn > .bi { font-size: 1em; line-height: 1; }
+
 /* HUD — btn-primary → cian con glow */
 html[data-bs-theme="dark"] .btn-primary {
     --bs-btn-bg:                  #2dd4ee;
@@ -3580,3 +3617,54 @@ dialog.isg-ir-a .form-control { min-height: 48px; font-size: 1rem; border-radius
     white-space: nowrap;
     background: var(--isg-surface);
 }
+
+/* ── Utilidades `bg-gradient-*` de ISORGA ──────────────────────────────────────
+   🔴 Las páginas portadas las usan para la cabecera de sus modales
+   (`class="modal-header bg-gradient-primary text-white"`), y en ISORGA viven en
+   `assets/css/app.min.css` (el tema Studio), que esta app NO carga. Sin ellas la
+   cabecera se queda SIN FONDO y el `text-white` deja el título **blanco sobre
+   blanco**: el modal parecía vacío. Medido el 2026-09-30 en copark.isorga.com.
+   En ISORGA las usan 47 ficheros, así que se traen, no se cambian las páginas.
+
+   ⚠️ Los valores son los de ISORGA. Allí el degradado va con `-moz-linear-gradient`
+   —sólo Firefox—, así que en el resto de navegadores se ve el color plano; aquí se
+   añade además la forma estándar, que es la que debió escribirse. El COLOR es el
+   mismo en los dos sitios, que es lo que importa para que el texto se lea. */
+.bg-gradient-primary   { background-color:#1f6bff !important; background-image:linear-gradient(180deg,#528dff,#065aff) !important; }
+.bg-gradient-success   { background-color:#028824 !important; background-image:linear-gradient(180deg,#03ba31,#026f1d) !important; }
+.bg-gradient-danger    { background-color:#e6180d !important; background-image:linear-gradient(180deg,#f33c33,#ce150c) !important; }
+.bg-gradient-warning   { background-color:#ff9500 !important; background-image:linear-gradient(180deg,#fa3,#e68600) !important; }
+.bg-gradient-info      { background-color:#30beff !important; background-image:linear-gradient(180deg,#63ceff,#17b6ff) !important; }
+.bg-gradient-secondary { background-color:#c9d2e3 !important; background-image:linear-gradient(180deg,#ebeef4,#b8c4da) !important; }
+.bg-gradient-dark      { background-color:#212837 !important; background-image:linear-gradient(180deg,#343f57,#171c27) !important; }
+
+/* ── Utilidades de OPACIDAD de ISORGA ─────────────────────────────────────────
+   🔴 Bootstrap 5 solo trae los pasos 10/25/50/75/100. El tema de ISORGA añade
+   los intermedios, y las páginas portadas los usan: p. ej. el contador de las
+   pestañas de la ficha de acción es
+       <span class="badge bg-primary bg-opacity-20 text-primary">
+   Sin `bg-opacity-20` el fondo queda AZUL SÓLIDO y el texto es `text-primary`,
+   también azul: el número no se lee. Medido el 2026-09-30 en copark.isorga.com.
+   Se traen los 22 pasos de ISORGA, no solo el que falla hoy. */
+.text-opacity-0 { --bs-text-opacity:0 }
+.text-opacity-5 { --bs-text-opacity:0.05 }
+.border-opacity-10 { --bs-border-opacity:0.1 }
+.text-opacity-15 { --bs-text-opacity:0.15 }
+.text-opacity-20 { --bs-text-opacity:0.2 }
+.border-opacity-25 { --bs-border-opacity:0.25 }
+.text-opacity-30 { --bs-text-opacity:0.3 }
+.text-opacity-35 { --bs-text-opacity:0.35 }
+.text-opacity-40 { --bs-text-opacity:0.4 }
+.text-opacity-45 { --bs-text-opacity:0.45 }
+.border-opacity-50 { --bs-border-opacity:0.5 }
+.text-opacity-55 { --bs-text-opacity:0.55 }
+.text-opacity-60 { --bs-text-opacity:0.6 }
+.text-opacity-65 { --bs-text-opacity:0.65 }
+.text-opacity-70 { --bs-text-opacity:0.7 }
+.border-opacity-75 { --bs-border-opacity:0.75 }
+.text-opacity-80 { --bs-text-opacity:0.8 }
+.text-opacity-85 { --bs-text-opacity:0.85 }
+.text-opacity-90 { --bs-text-opacity:0.9 }
+.text-opacity-95 { --bs-text-opacity:0.95 }
+.border-opacity-100 { --bs-border-opacity:1 }
+.text-opacity-105 { --bs-text-opacity:1.05 }

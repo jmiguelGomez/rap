@@ -75,6 +75,34 @@ foreach ($P['funciones'] as $fn) {
 }
 if ($escribir('app/funciones_isorga.php', $fi)) $cambios[] = 'app/funciones_isorga.php';
 
+// 4) Otros ficheros de ISORGA de los que solo se traen ALGUNAS funciones (p. ej. app/dbchat/ia_gestion.php, que arrastra el motor 0/ag_*)
+//    'extraer' => [ 'destino/en/la/app.php' => ['de' => 'ruta/en/isorga.php', 'funciones' => ['f1', 'f2']] ]
+foreach ($P['extraer'] ?? [] as $dest => $e) {
+    $srcX = file_get_contents($ISO . '/' . $e['de']);
+    $extraerDe = static function (string $nombre) use ($srcX): string {
+        $i = strpos($srcX, 'function ' . $nombre . '(');
+        if ($i === false) return '';
+        $j = strpos($srcX, '{', $i); $d = 0;
+        for ($k = $j; $k < strlen($srcX); $k++) { if ($srcX[$k] === '{') $d++; elseif ($srcX[$k] === '}' && --$d === 0) break; }
+        $pre = substr($srcX, 0, $i); $doc = '';
+        if (preg_match('~(/\*\*(?:(?!\*/).)*\*/\s*)$~s', $pre, $m)) $doc = $m[1];
+        return $doc . substr($srcX, $i, $k - $i + 1);
+    };
+    $out = "<?php\n// " . $DIR . ".isorga.com · GENERADO por scripts/rap_portar.php: funciones de isorga-net/" . $e['de'] . " que usa el módulo\n// portado (el resto de ese fichero no se trae). No editar a mano.\n";
+    foreach ($e['requiere'] ?? [] as $r) $out .= "require_once __DIR__ . '/" . $r . "';\n";
+    foreach ($e['funciones'] as $fn) {
+        $cuerpo = $extraerDe($fn);
+        if ($cuerpo === '') { $avisos[] = $e['de'] . ": no encuentro $fn()"; continue; }
+        $out .= "\nif (!function_exists('$fn')) {\n" . $cuerpo . "\n}\n";
+    }
+    if ($escribir($dest, $out)) $cambios[] = $dest;
+}
+
+// 5) Shims: ficheros VACÍOS que el módulo incluye y que en ISORGA no existen (allí solo dan un aviso; aquí ni eso)
+foreach ($P['shims'] ?? [] as $sh) {
+    if ($escribir($sh, "<?php\n// Shim vacío (scripts/rap_portar.php): el módulo lo incluye y en ISORGA este fichero NO existe. Aquí existe y no hace nada.\n")) $cambios[] = $sh;
+}
+
 echo ($ver ? "[--ver] " : "") . count($portados) . " ficheros portados a $DIR/\n";
 echo "Ficheros " . ($ver ? "que cambiarían" : "escritos") . ": " . count($cambios) . "\n";
 foreach ($cuenta as $k => $v) echo "  · $k: $v\n";

@@ -5,7 +5,7 @@
 <html lang="<?= $h($lang) ?>" data-bs-theme="light" data-theme="light">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
-<title><?= $h(APP_NOMBRE) ?> · <?= $h($language['RAP_ACCESO'] ?? 'Acceso') ?></title>
+<title><?= $h(defined('APP_TITULO') ? APP_TITULO : APP_NOMBRE . ' · ' . ($language['RAP_ACCESO'] ?? 'Acceso')) ?></title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
