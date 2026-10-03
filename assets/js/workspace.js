@@ -32,7 +32,7 @@
  }
  collapse?.addEventListener('click',() => {
   root.classList.toggle('sb-collapsed');
-  storage.set('check-sidebar',root.classList.contains('sb-collapsed')?'collapsed':'expanded');
+  storage.set('rap-sidebar',root.classList.contains('sb-collapsed')?'collapsed':'expanded');
   collapseLabel();
  });
  collapseLabel();
