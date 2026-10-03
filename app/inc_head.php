@@ -31,4 +31,6 @@ $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__D
     <script src="<?= $rapCss('js/workspace.js') ?>" defer></script>
     <?php // Tablas estilo Excel en toda la app (tablas_excel_global en app/config/estilo_trabajo.json), como en ISORGA ?>
     <?php include __DIR__ . '/includes/estilo_trabajo.php'; ?>
+    <?php // Color de la app = el de su tarjeta en isorga.com/0/index_2.php (fuente: isorga-net/app/config/colores_apps.php) ?>
+    <?php include __DIR__ . '/includes/color_app.php'; ?>
 </head>
