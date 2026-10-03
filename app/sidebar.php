@@ -26,7 +26,10 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
 
 <header class="topbar">
     <button type="button" class="sb-burger" id="sb-burger" aria-label="<?= $sbE($language['RAP_ABRIR_MENU'] ?? 'Abrir menú') ?>" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
-    <span class="topbar-title"><?= $sbE($sbTitulo) ?></span>
+    <?php // Sin título en la barra (2026-10-03, Juan Miguel): repetía el de la página («es redundante en todas las apps»;
+          //    probado primero en flota/formaciones.php). La etiqueta se queda VACÍA, no se borra: en móvil hace de
+          //    separador (.topbar-title { flex:1 }). Igual en todas las apps *.isorga.com menos cae y bjc. ?>
+    <span class="topbar-title"></span>
     <div class="topbar-spacer"></div>
     <?php // ISORGI (2026-10-03, Juan Miguel): la MASCOTA, como en la cabecera de ISORGA (index_2.php): solo la imagen
           //    3D a 2.25rem, sin texto ni recuadro. De momento SIN ninguna acción; se irá conectando (gancho data-isorgi).
