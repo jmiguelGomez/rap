@@ -28,12 +28,13 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
     <button type="button" class="sb-burger" id="sb-burger" aria-label="<?= $sbE($language['RAP_ABRIR_MENU'] ?? 'Abrir menú') ?>" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
     <span class="topbar-title"><?= $sbE($sbTitulo) ?></span>
     <div class="topbar-spacer"></div>
-    <?php // ISORGI (2026-10-03, Juan Miguel): de momento SOLO el botón, sin ninguna acción; se irá conectando. En todas
-          //    las apps menos cae y bjc (legal ya tiene el suyo, con su panel). Icono reducido a 72 px (9,7 KB; el original
-          //    isorgi_3d_sin.png pesa 1,4 MB). Cuando haga algo: el gancho es data-isorgi. ?>
-    <button type="button" class="app-nav-btn app-isorgi" data-isorgi title="Isorgi" aria-label="Isorgi">
-        <img src="/assets/img/isorgi_icono.png" width="36" height="36" alt="" style="border-radius:50%">
-        <span>Isorgi</span>
+    <?php // ISORGI (2026-10-03, Juan Miguel): la MASCOTA, como en la cabecera de ISORGA (index_2.php): solo la imagen
+          //    3D a 2.25rem, sin texto ni recuadro. De momento SIN ninguna acción; se irá conectando (gancho data-isorgi).
+          //    En todas las apps menos cae y bjc (legal ya tiene el suyo, con su panel). Imagen reducida a 72 px (9,7 KB;
+          //    el original isorgi_3d_sin.png pesa 1,4 MB). ?>
+    <button type="button" class="app-isorgi" data-isorgi title="Isorgi" aria-label="Isorgi"
+            style="background:none;border:0;padding:0 .25rem;line-height:0;cursor:pointer">
+        <img src="/assets/img/isorgi_3d_72.png" alt="" style="width:2.25rem;height:2.25rem;object-fit:contain;display:block">
     </button>
     <button class="app-nav-btn" type="button" id="quick-open" aria-haspopup="dialog"><i class="bi bi-search" aria-hidden="true"></i><span><?= $sbE($language['RAP_IR_A'] ?? 'Ir a…') ?></span><kbd>Ctrl K</kbd></button>
     <?php
