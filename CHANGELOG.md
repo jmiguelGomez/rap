@@ -1,5 +1,10 @@
 # CHANGELOG — rap.isorga.com
 
+## v0.014 — 2026-10-03
+### Modo claro / oscuro
+
+- Selector de modo claro / oscuro en la barra superior (luna/sol). Cada persona elige el modo en cada app por separado; por defecto, claro. El oscuro es sobrio, en grises, con el color de la app.
+
 ## v0.013 — 2026-10-03
 ### Puesta al día del 2-3 de octubre (12 cambios)
 

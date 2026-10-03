@@ -15,6 +15,7 @@
 //
 // 🔴 El acento se oscurece solo lo justo para que el texto blanco pase de 4,5:1 (WCAG AA): un ámbar o un cian claros
 //    con letras blancas no se leen. El menú lateral usa versiones muy oscuras del color, donde el texto claro sobra.
+// En modo oscuro (body[data-bs-theme="dark"], ver assets/css/oscuro.css) pasa al revés: el acento se ACLARA.
 // =====================================================================
 (static function (): void {
     if (!preg_match('#^/var/www/([a-z][a-z0-9]*)/#', __DIR__ . '/', $m)) return;
@@ -57,6 +58,29 @@
             . "--bs-btn-active-bg:$f;--bs-btn-active-border-color:$f;--bs-btn-disabled-bg:$a;--bs-btn-disabled-border-color:$a}"
             . ".btn-outline-primary{--bs-btn-color:$a;--bs-btn-border-color:$a;--bs-btn-hover-bg:$a;--bs-btn-hover-border-color:$a;"
             . "--bs-btn-active-bg:$f;--bs-btn-active-border-color:$f;--bs-btn-disabled-color:$a;--bs-btn-disabled-border-color:$a}";
+    }
+    // MODO OSCURO (2026-10-03, oscuro.css): sobre fondo oscuro el acento se ACLARA hasta leerse (4,5:1 contra el fondo
+    //    #15171a), y los botones primarios pasan a acento claro con texto oscuro (--btn-on-accent de oscuro.css).
+    //    Va colgado de body[data-bs-theme="dark"]: más específico que :root, así que gana sin depender del orden.
+    $fondo = [21, 23, 26];
+    $claro = $base;
+    for ($i = 0; $i < 30 && ($lum($claro) + 0.05) / ($lum($fondo) + 0.05) < 4.5; $i++) $claro = $mezcla($claro, $blanco, 0.06);
+    $claroF = $mezcla($claro, $blanco, 0.2);
+    $l = $hex($claro); $lf = $hex($claroF);
+    $lRgb = implode(',', array_map(static fn($v) => (int) round($v), $claro));
+    $lfRgb = implode(',', array_map(static fn($v) => (int) round($v), $claroF));
+    $css .= 'body[data-bs-theme="dark"]{'
+        . "--accent:$l;--accent-strong:$lf;--accent-soft:" . $hex($mezcla($base, $fondo, 0.78)) . ';'
+        . '--border-strong:' . $hex($mezcla($base, $fondo, 0.45)) . ';--glow-accent:none;'
+        . "--bs-primary:$l;--bs-primary-rgb:$lRgb;--isg-accent:$l;--isg-accent-strong:$lf;--isg-accent-rgb:$lRgb;"
+        . "--bs-link-color:$l;--bs-link-color-rgb:$lRgb;--bs-link-hover-color:$lf;--bs-link-hover-color-rgb:$lfRgb}";
+    if (trim((string) ($estilo['boton_primario_color'] ?? '')) === '') {
+        $css .= "body[data-bs-theme=\"dark\"] .btn-primary{--bs-btn-bg:$l;--bs-btn-border-color:$l;--bs-btn-color:#0f1216;"
+            . "--bs-btn-hover-bg:$lf;--bs-btn-hover-border-color:$lf;--bs-btn-hover-color:#0f1216;--bs-btn-active-bg:$lf;"
+            . "--bs-btn-active-border-color:$lf;--bs-btn-active-color:#0f1216;--bs-btn-disabled-bg:$l;--bs-btn-disabled-border-color:$l}"
+            . "body[data-bs-theme=\"dark\"] .btn-outline-primary{--bs-btn-color:$l;--bs-btn-border-color:$l;--bs-btn-hover-bg:$l;"
+            . "--bs-btn-hover-border-color:$l;--bs-btn-hover-color:#0f1216;--bs-btn-active-bg:$lf;--bs-btn-active-border-color:$lf;"
+            . "--bs-btn-active-color:#0f1216;--bs-btn-disabled-color:$l;--bs-btn-disabled-border-color:$l}";
     }
     echo '<style id="color-app" data-app="' . htmlspecialchars($m[1], ENT_QUOTES) . '">' . $css . "</style>\n";
 })();

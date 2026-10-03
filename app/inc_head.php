@@ -3,15 +3,23 @@
 // El aspecto es el de audit.isorga.com (theme/intranet/workspace + paginas.css, copias de allí).
 // isorga-tema.css va PRIMERO: trae los tokens --isg-* y las utilidades .isg-* que usan las pantallas
 // portadas de ISORGA; lo de audit va detrás y manda en la cáscara.
-// 🔴 Modo claro fijo, como en audit: data-theme="light" activa el bloque forzado de theme.css.
+// 🔴 data-theme y data-bs-theme del <html> se quedan SIEMPRE en "light". El modo OSCURO (2026-10-03, por persona y por
+//    app: tabla usuarios_modo) va en el <body data-bs-theme="dark"> + <html data-modo="oscuro"> y lo pinta
+//    assets/css/oscuro.css; así no se activan las reglas HUD de isorga-tema.css (ver la cabecera de oscuro.css).
 ob_start();
 require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/compat.php';
 require_once __DIR__ . '/style_guide.php';   // clases de tarjetas, tablas y botones ($CARD_FULL, $BTN_IMPRIMIR…) que usa el código portado de ISORGA (2026-10-03: faltaba y salían vacías)
 $rapH = static fn($v) => htmlspecialchars((string) $v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__DIR__ . '/../assets/' . $f);
+// Modo claro/oscuro de esta persona EN ESTA APP (fuente única: isorga-net/app/includes/modo_tema.php). Sin tabla: claro.
+$appModoOscuro = false;
+if (is_readable('/var/www/isorga-net/app/includes/modo_tema.php')) {
+    require_once '/var/www/isorga-net/app/includes/modo_tema.php';
+    $appModoOscuro = isorga_modo_oscuro((int) ($_SESSION['user']['NoUsuario'] ?? 0), isorga_modo_app_de_ruta(__DIR__));
+}
 ?><!DOCTYPE html>
-<html lang="<?= $rapH($lang) ?>" data-bs-theme="light" data-theme="light">
+<html lang="<?= $rapH($lang) ?>" data-bs-theme="light" data-theme="light"<?= $appModoOscuro ? ' data-modo="oscuro"' : '' ?>>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +37,7 @@ $rapCss = static fn(string $f) => '/assets/' . $f . '?v=' . (int) @filemtime(__D
     <link href="<?= $rapCss('css/intranet.css') ?>" rel="stylesheet">
     <link href="<?= $rapCss('css/paginas.css') ?>" rel="stylesheet">
     <link href="<?= $rapCss('css/workspace.css') ?>" rel="stylesheet">
+    <link href="<?= $rapCss('css/oscuro.css') ?>" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="<?= $rapCss('js/workspace.js') ?>" defer></script>
     <?php // Tablas estilo Excel en toda la app (tablas_excel_global en app/config/estilo_trabajo.json), como en ISORGA ?>

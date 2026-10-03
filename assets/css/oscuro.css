@@ -1,0 +1,133 @@
+/* =====================================================================
+   oscuro.css — MODO OSCURO SOBRIO de las apps *.isorga.com (2026-10-03).
+
+   Juan Miguel: selector claro/oscuro en la cabecera de cada app, preferencia por persona Y por app (tabla
+   usuarios_modo, isorga-net/app/includes/modo_tema.php), y un oscuro SOBRIO: grises neutros con el color de la
+   app como acento — no el HUD cian de ISORGA.
+
+   🔴 CÓMO SE ACTIVA, Y POR QUÉ ASÍ:
+      · <html data-modo="oscuro">  → fondo del lienzo y `color-scheme: dark` (barras de scroll, controles nativos).
+      · <body data-bs-theme="dark"> → el modo oscuro NATIVO de Bootstrap 5.3 (modales, desplegables, formularios,
+        tablas) y TODOS los tokens de abajo.
+      El atributo de Bootstrap va en el <body> y NO en el <html> a propósito: isorga-tema.css (copia del
+      studio-theme-toggle.css de ISORGA) trae ~170 reglas HUD colgadas de `html[data-bs-theme="dark"]`, con el cian
+      escrito a mano y !important. Con el atributo en el body no se activa ni una, y no hay que tocar las copias
+      divergidas de isorga-tema.css que tiene cada app. Su bloque de tokens claros (`html:not([data-bs-theme="dark"])`)
+      se queda en el <html> y aquí se redefine en el body, que es lo que heredan las pantallas.
+   · theme.css no se toca: sus tokens están en :root y aquí se redefinen en el body.
+   · El acento de la app en oscuro (aclarado hasta leerse sobre el fondo) lo pone color_app.php, que se carga después.
+   · Este fichero es IGUAL en todas las apps; el original está en el molde (/var/www/check). Sin `data-bs-theme` en
+     el body no aplica nada: en claro no cambia ni un píxel.
+   ===================================================================== */
+
+html[data-modo="oscuro"] {
+    color-scheme: dark;
+    background-color: #15171a;
+}
+
+body[data-bs-theme="dark"] {
+    /* ── Paleta neutra ───────────────────────────────────────────────── */
+    --bg:             #15171a;
+    --surface:        #1d2024;
+    --surface-raised: #24282d;
+    --surface-hover:  rgba(255, 255, 255, .05);
+    --hover-bg:       rgba(255, 255, 255, .05);
+    --text:           #e4e7eb;
+    --text-muted:     #9ba4ae;
+    --border:         #30353c;
+    --border-strong:  #4a525c;
+    --border-danger:  rgba(248, 113, 113, .45);
+    --overlay:        #000000b3;
+    --brand-logo-bg:  #ffffff;      /* los logos de cliente son para fondo blanco: se les deja su recuadro claro */
+
+    /* Acento por defecto (si la app no tiene color en colores_apps.php); color_app.php lo sustituye */
+    --accent:         #8ab4ff;
+    --accent-strong:  #a9c7ff;
+    --accent-soft:    #22314a;
+    --on-accent:      #ffffff;      /* texto sobre el menú lateral (--nav-*), que sigue oscuro */
+    --btn-on-accent:  #0f1216;      /* texto sobre el acento, que en oscuro es claro */
+
+    /* Sin brillos ni recortes */
+    --glow-text: none; --glow-filter: none; --glow-accent: none;
+    --shadow-hover:   0 10px 28px rgba(0, 0, 0, .45);
+    --shadow-button:  0 2px 6px rgba(0, 0, 0, .4);
+    --elevation:      0 1px 2px rgba(0, 0, 0, .5), 0 6px 18px rgba(0, 0, 0, .35);
+    --elevation-high: 0 12px 28px rgba(0, 0, 0, .55), 0 28px 64px rgba(0, 0, 0, .45);
+
+    /* Estados legibles sobre oscuro */
+    --state-success: #4ade80; --state-success-bg: rgba(34, 197, 94, .12);  --state-success-border: rgba(34, 197, 94, .35);
+    --state-danger:  #f87171; --state-danger-bg:  rgba(248, 113, 113, .12); --state-danger-border:  rgba(248, 113, 113, .35);
+    --state-info:    #7dd3fc; --state-info-bg:    rgba(56, 189, 248, .12);  --state-info-border:    rgba(56, 189, 248, .35);
+    --kbd-bg: #2a2f35; --kbd-text: #e4e7eb; --kbd-border: #4a525c;
+
+    /* ── Tokens --isg-* de las pantallas portadas de ISORGA (isorga-tema.css) ── */
+    --isg-bg: var(--bg); --isg-surface: var(--surface); --isg-card-bg: var(--surface);
+    --isg-header-bg: #1a1d21; --isg-sidebar-bg: #1a1d21;
+    --isg-text: var(--text); --isg-text-muted: var(--text-muted);
+    --isg-border: var(--border); --isg-border-solid: var(--border);
+    --isg-hover-bg: rgba(255, 255, 255, .05); --isg-active-bg: rgba(255, 255, 255, .09);
+    --isg-active-shadow: none;
+    --isg-glow-accent: none; --isg-glow-text: none; --isg-glow-border: none; --isg-clip-card: none;
+    --isg-table-header-bg: #262a30;
+    --isg-input-bg: #191c20; --isg-input-border: #3a4149;
+
+    /* ── Bootstrap: lo que la propia hoja de Bootstrap no deja neutro ── */
+    --bs-body-bg: var(--bg);       --bs-body-bg-rgb: 21, 23, 26;
+    --bs-body-color: var(--text);  --bs-body-color-rgb: 228, 231, 235;
+    --bs-emphasis-color: #ffffff;  --bs-emphasis-color-rgb: 255, 255, 255;
+    --bs-secondary-color: rgba(228, 231, 235, .72); --bs-secondary-color-rgb: 228, 231, 235;
+    --bs-secondary-bg: var(--surface);       --bs-secondary-bg-rgb: 29, 32, 36;
+    --bs-tertiary-bg: var(--surface-raised); --bs-tertiary-bg-rgb: 36, 40, 45;
+    --bs-tertiary-color: rgba(228, 231, 235, .5);
+    --bs-border-color: var(--border);
+    --bs-border-color-translucent: rgba(255, 255, 255, .12);
+    --bs-dark-bg-subtle: #101214;
+    --bs-app-header-bg: #1a1d21; --bs-app-top-nav-bg: var(--bg);
+    --bs-app-header-input-bg: #191c20; --bs-app-header-input-border: #3a4149;
+    --bs-app-sidebar-border-color: var(--border); --bs-app-sidebar-content-mobile-bg: #1a1d21;
+}
+
+/* ── Componentes que llevan el color claro escrito (isorga-tema.css, Bootstrap) ───────────────────── */
+body[data-bs-theme="dark"] .table {
+    --bs-table-border-color: var(--border);
+}
+body[data-bs-theme="dark"] .table-light,
+body[data-bs-theme="dark"] .table > thead.table-light > tr > th,
+body[data-bs-theme="dark"] .table > thead > tr > th.table-light {
+    --bs-table-bg: #262a30 !important;
+    --bs-table-color: var(--text) !important;
+    --bs-table-border-color: var(--border) !important;
+    --bs-table-striped-bg: #2a2f35; --bs-table-hover-bg: #2d3238;
+    background-color: #262a30 !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+body[data-bs-theme="dark"] .btn-outline-secondary {
+    --bs-btn-color: var(--text-muted); --bs-btn-border-color: var(--border-strong);
+    --bs-btn-hover-color: var(--text); --bs-btn-hover-bg: rgba(255, 255, 255, .06); --bs-btn-hover-border-color: var(--text-muted);
+    --bs-btn-active-color: var(--text); --bs-btn-active-bg: rgba(255, 255, 255, .1); --bs-btn-active-border-color: var(--text-muted);
+}
+body[data-bs-theme="dark"] .btn-light {
+    --bs-btn-color: var(--text); --bs-btn-bg: var(--surface-raised); --bs-btn-border-color: var(--border);
+    --bs-btn-hover-color: #fff; --bs-btn-hover-bg: #2d3238; --bs-btn-hover-border-color: var(--border-strong);
+}
+body[data-bs-theme="dark"] .alert-info { color: var(--state-info) !important; }
+
+/* Utilidades de Bootstrap con el blanco/negro fijo (pantallas portadas de ISORGA) */
+body[data-bs-theme="dark"] .bg-white { background-color: var(--surface) !important; }
+body[data-bs-theme="dark"] .bg-light { background-color: var(--surface-raised) !important; }
+body[data-bs-theme="dark"] .text-dark,
+body[data-bs-theme="dark"] .text-black { color: var(--text) !important; }
+body[data-bs-theme="dark"] .border-light { border-color: var(--border) !important; }
+body[data-bs-theme="dark"] .bg-gradient-secondary { background-color: #3a4149 !important; background-image: none !important; }
+
+/* Tablas «Excel» y DataTables de las pantallas portadas */
+body[data-bs-theme="dark"] table.isg-excel tbody tr:nth-child(even) > * { background-color: rgba(255, 255, 255, .02); }
+body[data-bs-theme="dark"] .dataTables_wrapper .dataTables_paginate .page-link { background-color: var(--surface); border-color: var(--border); }
+body[data-bs-theme="dark"] .page-item.active .page-link { background-color: var(--accent); border-color: var(--accent); color: var(--btn-on-accent) !important; }
+
+/* Imágenes: sin cambios (fotos, logos, pictogramas). Los iconos SVG de Bootstrap ya siguen currentColor. */
+
+/* El botón del selector */
+.app-tema-btn { background: none; border: 0; padding: 0 .35rem; line-height: 1; cursor: pointer; color: inherit; font-size: 1.15rem; }
+.app-tema-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }

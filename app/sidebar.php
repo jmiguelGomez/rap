@@ -54,6 +54,39 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
         <i class="bi bi-list-check" aria-hidden="true"></i><span><?= $sbE($language['ACCIONES'] ?? 'Acciones') ?></span>
     </a>
     <?php endif; ?>
+    <?php // MODO CLARO / OSCURO (2026-10-03, Juan Miguel): por persona Y por app (tabla usuarios_modo; fuente única
+          //    isorga-net/app/includes/modo_tema.php). Cambia al instante y lo guarda /auth/tema_envio.php; si no se puede
+          //    guardar (p. ej. la tabla aún no existe), vuelve al modo anterior. Lo pinta assets/css/oscuro.css.
+          $sbTemaOscuro = !empty($appModoOscuro);
+          if (empty($_SESSION['tema_token'])) $_SESSION['tema_token'] = bin2hex(random_bytes(16));
+          $sbTxtOscuro = ucfirst(mb_strtolower((string) ($language['MODO_OSCURO'] ?? 'Modo oscuro'), 'UTF-8'));
+          $sbTxtClaro  = ucfirst(mb_strtolower((string) ($language['MODO_CLARO'] ?? 'Modo claro'), 'UTF-8')); ?>
+    <button type="button" class="app-tema-btn" id="app-tema-btn" data-t="<?= $sbE($_SESSION['tema_token']) ?>"
+            data-oscuro="<?= $sbE($sbTxtOscuro) ?>" data-claro="<?= $sbE($sbTxtClaro) ?>"
+            aria-pressed="<?= $sbTemaOscuro ? 'true' : 'false' ?>"
+            title="<?= $sbE($sbTemaOscuro ? $sbTxtClaro : $sbTxtOscuro) ?>" aria-label="<?= $sbE($sbTemaOscuro ? $sbTxtClaro : $sbTxtOscuro) ?>">
+        <i class="bi <?= $sbTemaOscuro ? 'bi-sun' : 'bi-moon-stars' ?>" aria-hidden="true"></i>
+    </button>
+    <script>(function () {
+        var b = document.getElementById('app-tema-btn'); if (!b) return;
+        function aplicar(o) {
+            if (o) { document.body.setAttribute('data-bs-theme', 'dark'); document.documentElement.setAttribute('data-modo', 'oscuro'); }
+            else { document.body.removeAttribute('data-bs-theme'); document.documentElement.removeAttribute('data-modo'); }
+            b.setAttribute('aria-pressed', o ? 'true' : 'false');
+            b.querySelector('i').className = 'bi ' + (o ? 'bi-sun' : 'bi-moon-stars');
+            b.title = o ? b.dataset.claro : b.dataset.oscuro; b.setAttribute('aria-label', b.title);
+        }
+        b.addEventListener('click', function () {
+            var o = document.body.getAttribute('data-bs-theme') !== 'dark';
+            aplicar(o);
+            fetch('/auth/tema_envio.php', { method: 'POST', credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+                body: 'oscuro=' + (o ? 1 : 0) + '&t=' + encodeURIComponent(b.dataset.t) })
+                .then(function (r) { return r.json(); })
+                .then(function (j) { if (!j || !j.ok) aplicar(!o); })
+                .catch(function () { aplicar(!o); });
+        });
+    })();</script>
     <?php // 🔴 «Ir a…» (Ctrl K) RETIRADO de la barra por orden de Juan Miguel (2026-10-01; en esta app, el 2026-10-03).
           //    El marcado se deja dentro de un `if (false)` en vez de borrarlo: vuelve cambiando una
           //    palabra. NO se puede comentar con una pareja barra-asterisco: el marcado lleva dentro
