@@ -1,5 +1,10 @@
 # CHANGELOG — rap.isorga.com
 
+## v0.015 — 2026-10-03
+### Modo oscuro · texto de las etiquetas amarillas
+
+- Modo oscuro: las etiquetas amarillas y celestes (pendiente, aviso…) vuelven a tener el texto oscuro y se leen; antes salía claro sobre amarillo.
+
 ## v0.014 — 2026-10-03
 ### Modo claro / oscuro
 

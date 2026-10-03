@@ -116,8 +116,12 @@ body[data-bs-theme="dark"] .alert-info { color: var(--state-info) !important; }
 /* Utilidades de Bootstrap con el blanco/negro fijo (pantallas portadas de ISORGA) */
 body[data-bs-theme="dark"] .bg-white { background-color: var(--surface) !important; }
 body[data-bs-theme="dark"] .bg-light { background-color: var(--surface-raised) !important; }
-body[data-bs-theme="dark"] .text-dark,
-body[data-bs-theme="dark"] .text-black { color: var(--text) !important; }
+/* text-dark → claro, MENOS donde va sobre un fondo que sigue siendo claro (amarillo, cian…): «badge bg-warning text-dark»
+   es el uso más común (en CAE, 16 de 18) y con texto claro sobre amarillo no se lee. */
+body[data-bs-theme="dark"] .text-dark:not([class*="bg-warning"]):not([class*="bg-info"]):not([class*="text-bg-"]):not([class*="btn-warning"]):not([class*="btn-info"]),
+body[data-bs-theme="dark"] .text-black:not([class*="bg-warning"]):not([class*="bg-info"]):not([class*="text-bg-"]) { color: var(--text) !important; }
+body[data-bs-theme="dark"] .bg-warning .text-dark,
+body[data-bs-theme="dark"] .bg-info .text-dark { color: #1a1d21 !important; }
 body[data-bs-theme="dark"] .border-light { border-color: var(--border) !important; }
 body[data-bs-theme="dark"] .bg-gradient-secondary { background-color: #3a4149 !important; background-image: none !important; }
 
