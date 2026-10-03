@@ -129,7 +129,8 @@ foreach ($sbMenu as [, $t, $u]) { if (basename($u) === $sbActual) { $sbTitulo = 
         // que «Cambio usuario» en el menú de usuario de ISORGA). Soporte = el usuario de la app tiene usuarios.soporte = 1,
         // o en ISORGA la sesión es de soporte aunque esté actuando como otra persona (marca `s` firmada en la entrada,
         // auth/sso.php → $_SESSION['soporte_isorga']). Lleva a la pantalla de ISORGA de siempre (0/usuarios_soporte.php),
-        // diciendo de qué app viene; tras elegir persona y centro, ISORGA vuelve a entrar aquí como ella. Toda la
+        // diciendo de qué app viene; tras elegir persona y centro, ISORGA acaba en la portada de bloques (0/index_2.php),
+        // NO vuelve a esta app (Juan Miguel, 2026-10-03). Toda la
         // comprobación la hacen 0/usuarios_soporte.php y 0/login_entrada.php. Sin soporte, el nombre se ve como siempre.
         $sbSoporte = !empty($_SESSION['soporte_isorga']);
         if (!$sbSoporte && (int) ($_SESSION['user']['NoUsuario'] ?? 0) > 0) {
